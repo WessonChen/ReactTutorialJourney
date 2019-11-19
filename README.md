@@ -293,7 +293,7 @@ export default Counter
 3. `React` will group multiple `setState()` calls into a single update for better performance like in `incrementThree()`
 
 <p align="center">
-  <img src="https://i.ibb.co/9GTqNs2/set-State-Grouped.png">
+  <img src="https://i.ibb.co/dWw6fpd/set-State-Grouped.png">
 </p>
 
 The updated value will not be carried over between the different calls
