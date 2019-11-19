@@ -163,6 +163,65 @@ Function parameters | Variables declared in the function body
 `props` - Functional Components | `useState` Hood - Functional Components
 `this.props` - Class Components | `this.state` - Class Components
 
+```javascript
+import React from 'react';
 
+class Welcome extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            message: 'Welcome visitor',
+        }
+    }
+
+    changeMessage() {
+        this.setState({
+            message: 'Thanks for subscribing'
+        })
+    }
+
+    render() {
+        return (
+            <div>
+                <h1>{this.state.message}</h1>
+                <button
+                    onClick={() => this.changeMessage()}
+                >Subscribe
+                </button>
+            </div>
+        )
+    }
+}
+
+export default Welcome
+```
+
+```javascript
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Welcome from './components/Welcome';
+
+class App extends React.Component {
+    render() {
+        return (
+            <div className='app'>
+                <Welcome />
+            </div>
+        );
+    }
+}
+
+//-------------------------------------------
+ReactDOM.render(
+    <App />,
+    document.getElementById('root')
+);
+```
+
+- `state` is an object that is privately maintained inside the component
+- `state` can influence what is rendered in the browser
+- `state` can be changed within the component
+
+In JavaScript classes, you need to always call `super` when defining the constructor of a subclass. All React component classes that have a `constructor` should start it with a `super(props)` call.
 
 [Back to Table of Contents](#table-of-contents)
