@@ -4,11 +4,12 @@ import PropTypes from 'prop-types';
 
 function Greet(props) {
     console.log(props);
-    let temp = props.heroName ? 'a.k.a ' + props.heroName : '';
+    const {name, heroName, children} = props
+    let temp = heroName ? 'a.k.a ' + heroName : '';
     return (
         <div>
-            <h1>Hello, {props.name} {temp}</h1>
-            {props.children}
+            <h1>Hello, {name} {temp}</h1>
+            {children}
         </div>
     )
 }

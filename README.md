@@ -6,6 +6,7 @@
 4. [Props](#props)
 5. [State](#state)
 6. [setState](#setstate)
+7. [Destructuring props and state](#destructuring-props-and-state)
 
 # Notes
 ## React Notes
@@ -299,5 +300,45 @@ export default Counter
 The updated value will not be carried over between the different calls
 
 4. So, whenever you have to update the `state` based on the previous `state`, we need to pass a function as an argument to `setState()` method instead of passing in a regular object like in `incrementFromPrev()`
+
+[Back to Table of Contents](#table-of-contents)
+
+### Destructuring props and state
+`props` and `state` can be destructured, so we can use them directly.
+
+```javascript
+function Greet({name, heroName}) {
+    return (
+        <div>
+            <h1>Hello, {name} {heroName}</h1>
+        </div>
+    )
+}
+```
+
+```javascript
+function Greet(props) {
+    const {name, heroName} = props
+    return (
+        <div>
+            <h1>Hello, {name} {heroName}</h1>
+        </div>
+    )
+}
+```
+
+```javascript
+class Greet extends Component {
+    render() {
+        const {name, heroName} = this.props
+        const {state1, state2} = this.state
+        return (
+            <div>
+                <h1>Hello, {name} {heroName}</h1>
+            </div>
+        )
+    }
+}
+```
 
 [Back to Table of Contents](#table-of-contents)
