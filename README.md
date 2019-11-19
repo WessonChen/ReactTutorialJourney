@@ -5,6 +5,7 @@
 3. [JSX](#jsx)
 4. [Props](#props)
 5. [State](#state)
+6. [setState](#setstate)
 
 # Notes
 ## React Notes
@@ -223,5 +224,80 @@ ReactDOM.render(
 - `state` can be changed within the component
 
 In JavaScript classes, you need to always call `super` when defining the constructor of a subclass. All React component classes that have a `constructor` should start it with a `super(props)` call.
+
+[Back to Table of Contents](#table-of-contents)
+
+### setState
+```javascript
+import React, { Component } from 'react'
+
+class Counter extends Component {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            count: 0
+        }
+    }
+
+    increment() {
+        this.setState({
+            count: this.state.count + 1,
+        }, () => { 
+            console.log('Callback value', this.state.count)
+        })
+        console.log(this.state.count)
+    }
+
+    incrementFromPrev() {
+        this.setState(p => ({
+            count: p.count + 1
+        }))
+    }
+
+    incrementThree() {
+        this.increment()
+        this.increment()
+        this.increment()
+    }
+
+    incrementThreeFromPrev() {
+        this.incrementFromPrev()
+        this.incrementFromPrev()
+        this.incrementFromPrev()
+    }
+
+    render() {
+        return (
+            <div>
+                <div>Count - {this.state.count}</div>
+                <button onClick={() => this.increment()}>Increment</button>
+                <button onClick={() => this.incrementThree()}>IncrementThree</button>
+                <button onClick={() => this.incrementThreeFromPrev()}>IncrementThreeFromPrev</button>
+            </div>
+        )
+    }
+}
+
+export default Counter
+```
+
+1. Do not mutate `state` directly. It will **not** re-render the UI. Instead, use `setState()` to notify `React` re-render the UI
+
+2. `setState()` is an **async** method, if you want to use `await` feature, use the second (callback) argument like in `increment()`
+
+<p align="center">
+  <img src="https://i.ibb.co/JRvP8F7/set-State-async.png">
+</p>
+
+3. `React` will group multiple `setState()` calls into a single update for better performance like in `incrementThree()`
+
+<p align="center">
+  <img src="https://i.ibb.co/9GTqNs2/set-State-Grouped.png">
+</p>
+
+The updated value will not be carried over between the different calls
+
+4. So, whenever you have to update the `state` based on the previous `state`, we need to pass a function as an argument to `setState()` method instead of passing in a regular object like in `incrementFromPrev()`
 
 [Back to Table of Contents](#table-of-contents)

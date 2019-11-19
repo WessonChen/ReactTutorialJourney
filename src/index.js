@@ -1,12 +1,12 @@
-import React from 'react';
+import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-import Welcome from './components/Welcome';
+import Counter from './components/Counter';
 
-class App extends React.Component {
+class App extends Component {
     render() {
         return (
             <div className='app'>
-                <Welcome />
+                <Counter />
             </div>
         );
     }
