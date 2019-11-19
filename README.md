@@ -1,12 +1,13 @@
 # Table of Contents
-## [0. React](#react)
-[1. Components](#components)
-[2. Functional Components vs Class Components](#functional-components-vs-class-components)
-[3. JSX](#jsx)
-[4. Props](#props)
+## [React](#react-notes)
+1. [Components](#components)
+2. [Functional Components vs Class Components](#functional-components-vs-class-components)
+3. [JSX](#jsx)
+4. [Props](#props)
+5. [State](#state)
 
 # Notes
-## React
+## React Notes
 ### Components
 1. Components describe a part of the user interface
 2. They are re-usable and can be nested inside other components
@@ -26,6 +27,8 @@
         )
         ```
 
+[Back to Table of Contents](#table-of-contents)
+
 ### Functional Components vs Class Components
 1. Functional components
     - Simple functions
@@ -42,6 +45,8 @@
     - Also called Stateful/Smart/Container components
 
 **Important: In the new version of React.js, hooks can be used in functional components with state as well.**
+
+[Back to Table of Contents](#table-of-contents)
 
 ### JSX
 JavaScript XML (JSX) - Extension to the JavaScript language syntax
@@ -82,13 +87,14 @@ We are using `className` for `CSS` classes instead of `class` because the React 
     - onclick -> onClick
     - tabindex -> tabIndex
 
+[Back to Table of Contents](#table-of-contents)
+
 ### Props
-- `props` is immutable, you cannot assign value to it in any circumstances
+- `props` is **immutable**, you cannot assign value to it in any circumstances
 - `props` is an **object**
 
 ```javascript
 import React from 'react';
-import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 
 
@@ -108,6 +114,14 @@ Greet.propTypes = {
     heroName: PropTypes.string,
     children: PropTypes.array,
 };
+
+export default Greet
+```
+
+```javascript
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Greet from './components/Greet'
 
 class App extends React.Component {
     render() {
@@ -136,4 +150,19 @@ ReactDOM.render(
   <img src="https://i.ibb.co/BTfbCtM/props-is-an-object.png">
 </p>
 
-The `PropTypes` in the code is optional, but it is a good practice to add type validation in the code since the javascript is a dynamic language.
+The `PropTypes` in the code is optional, but it is always a good practice to add type validation to the code since the javascript is a dynamic language.
+
+[Back to Table of Contents](#table-of-contents)
+
+### State
+`props` | `state`
+:---: | :---:
+`props` get passed to the component | `state` is managed within the component
+Function parameters | Variables declared in the function body
+`props` are immutable | `state` can be changed
+`props` - Functional Components | `useState` Hood - Functional Components
+`this.props` - Class Components | `this.state` - Class Components
+
+
+
+[Back to Table of Contents](#table-of-contents)
