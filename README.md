@@ -7,6 +7,7 @@
 5. [State](#state)
 6. [setState](#setstate)
 7. [Destructuring props and state](#destructuring-props-and-state)
+8. [Event Handling](#event-handling)
 
 # Notes
 ## React Notes
@@ -342,3 +343,221 @@ class Greet extends Component {
 ```
 
 [Back to Table of Contents](#table-of-contents)
+
+### Event Handling
+```javascript
+import React, {Component} from 'react'
+
+function FunctionClick() {
+    function clickHander1() {
+        console.log('Clicked1')
+    }
+
+    return (
+        <div>
+            <button onClick={clickHander1}>Click1</button>
+        </div>
+    )
+}
+
+class ClassClick extends Component {
+    clickHander2() {
+        console.log('Clicked2')
+    }
+
+    render() {
+        return (
+            <div>
+                <button onClick={this.clickHander2}>Click2</button>
+            </div>
+        )
+    }
+}
+
+export { FunctionClick, ClassClick }
+```
+
+Notice here we do not have `()`, because we pass `function` as `eventHandler`. If we use `()`, it becomes a function call.
+
+Considering the following code
+```javascript
+class EventBind extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            message: 'Hello',
+            isHello: true,
+        }
+        //this.clickHandler = this.clickHandler.bind(this)
+    }
+
+    // clickHandler = () => {
+    //     this.setState({
+    //         message: this.state.isHello ? 'Goodbye' : 'Hello',
+    //         isHello: !this.state.isHello,
+    //     })
+    // }
+
+    clickHandler() {
+        this.setState({
+            message: this.state.isHello ? 'Goodbye' : 'Hello',
+            isHello: !this.state.isHello,
+        })
+    }
+
+    render() {
+        const {message} = this.state
+        return (
+            <div>
+                <div>{message}</div>
+                <button onClick={this.clickHandler}>Error</button>
+                <button onClick={this.clickHandler.bind(this)}>Call bind method</button>
+                <button onClick={() => this.clickHandler()}>Use arrow function</button>
+            </div>
+        )
+    }
+}
+```
+
+If we click the first button, the page will crush, because the key word `this` in `clickHandler()` function is `undefined`. To fix this, we have several ways
+
+1. In the second button, we bind the object `this` to the `clickHandler()` function using the key word `bind(this)` (Perfermance: Slower)
+2. In the third button, we use arrow function. It **calls** the `eventHandler` in the body and returns the value (Perfermance: Slower)
+3. Also, we can bind the object `this` in the `constructor`. Check the commented line in the `constructor`, the Error button will work if we enable this line. Because thie bind happends only once in the `constructor`, this is the quickest one (Recommented)
+4. Last, using class property as arrow functions. If we comment the `clickHandler()` function and uncomment the `clickHandler` property, the Error button will work.
+
+[Back to Table of Contents](#table-of-contents)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
