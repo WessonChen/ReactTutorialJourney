@@ -17,7 +17,7 @@ function Greet(props) {
 Greet.propTypes = {
     name: PropTypes.string.isRequired,
     heroName: PropTypes.string,
-    children: PropTypes.array,
+    children: PropTypes.node,
 };
 
 export default Greet

@@ -426,6 +426,47 @@ If we click the first button, the page will crush, because the key word `this` i
 3. Also, we can bind the object `this` in the `constructor`. Check the commented line in the `constructor`, the Error button will work if we enable this line. Because thie bind happends only once in the `constructor`, this is the quickest one (Recommented)
 4. Last, using class property as arrow functions. If we comment the `clickHandler()` function and uncomment the `clickHandler` property, the Error button will work.
 
+Even though the binding in `constructor` is the recommented way, but some times we need to use arrow function to pass data from child to parent.
+
+```javascript
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
+
+class ParentComponent extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            parentName: 'Parent',
+        }
+
+        this.greetParent = this.greetParent.bind(this)
+    }
+
+    greetParent(childName) {
+        alert(`Hello ${typeof(childName) == 'string' ? childName : this.state.parentName}`)
+    }
+
+    render() {
+        return <div>
+            <ChildComponent greetHandler={this.greetParent}/>
+        </div>
+    }
+}
+
+function ChildComponent(props) {
+    return <div>
+        <button onClick={props.greetHandler}>Greet Parent</button>
+        <button onClick={() => props.greetHandler('Child')}>Greet Child</button>
+    </div>
+}
+
+ChildComponent.propTypes = {
+    greetHandler: PropTypes.func,
+};
+
+export { ParentComponent }
+```
+
 [Back to Table of Contents](#table-of-contents)
 
 
