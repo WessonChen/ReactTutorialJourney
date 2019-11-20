@@ -10,6 +10,7 @@
 8. [Event Handling](#event-handling)
 9. [List](#list)
 10. [Basic Form](#basic-form)
+11. [Component Lifecycle](#component-lifecycle)
 
 # Notes
 ## React Notes
@@ -653,12 +654,42 @@ Options.propTypes = {
 
 export { Form }
 ```
+Check [Official Docs](https://reactjs.org/docs/forms.html) for more info.
 
 [Back to Table of Contents](#table-of-contents)
 
+### Component Lifecycle
+1. **Mounting**
 
+    These methods are called in the following order when an instance of a component is being created and inserted into the DOM:
+    - constructor()
+    - static getDerivedStateFromProps()
+    - render()
+    - componentDidMount()
 
+2. **Updating**
 
+    An update can be caused by changes to props or state. These methods are called in the following order when a component is being re-rendered:
+    - static getDerivedStateFromProps()
+    - shouldComponentUpdate()
+    - render()
+    - getSnapshotBeforeUpdate()
+    - componentDidUpdate()
+
+3. **Unmounting**
+
+    This method is called when a component is being removed from the DOM:
+    - componentWillUnmount()
+
+4. **Error Handling**
+
+    These methods are called when there is an error during rendering, in a lifecycle method, or in the constructor of any child component.
+    - static getDerivedStateFromError()
+    - componentDidCatch()
+
+Check [Official Docs](https://reactjs.org/docs/react-component.html) for more info.
+
+[Back to Table of Contents](#table-of-contents)
 
 
 
