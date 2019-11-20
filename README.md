@@ -662,32 +662,121 @@ Check [Official Docs](https://reactjs.org/docs/forms.html) for more info.
 1. **Mounting**
 
     These methods are called in the following order when an instance of a component is being created and inserted into the DOM:
-    - constructor()
-    - static getDerivedStateFromProps()
-    - render()
-    - componentDidMount()
+    - `constructor()`
+    - `static getDerivedStateFromProps()`
+    - `render()`
+    - `componentDidMount()`
 
 2. **Updating**
 
     An update can be caused by changes to props or state. These methods are called in the following order when a component is being re-rendered:
-    - static getDerivedStateFromProps()
-    - shouldComponentUpdate()
-    - render()
-    - getSnapshotBeforeUpdate()
-    - componentDidUpdate()
+    - `static getDerivedStateFromProps()`
+    - `shouldComponentUpdate()`
+    - `render()`
+    - `getSnapshotBeforeUpdate()`
+    - `componentDidUpdate()`
 
 3. **Unmounting**
 
     This method is called when a component is being removed from the DOM:
-    - componentWillUnmount()
+    - `componentWillUnmount()`
 
 4. **Error Handling**
 
     These methods are called when there is an error during rendering, in a lifecycle method, or in the constructor of any child component.
-    - static getDerivedStateFromError()
-    - componentDidCatch()
+    - `static getDerivedStateFromError()`
+    - `componentDidCatch()`
 
 Check [Official Docs](https://reactjs.org/docs/react-component.html) for more info.
+
+#### Mounting Lifecycle Methods
+
+1. `constructor(props)`
+    - A special function that will get called whenever a new component is created
+    - Used for initializing state and binding the event handlers
+    - Should not cause side effects like HTTP requests
+    - Has to call `super(props)` and then directly overwrite `this.state`, this is the only place to set `state` by `this.state`
+
+2. `static getDerivedStateFromProps(props, state)`
+    - rarely used when the `state` of the component depends on changes in `props` over time
+    - set the `state` by returning a state **object**
+    - Should not cause side effects like HTTP requests
+
+3. `render()`
+    - The only required method
+    - Read `props` & `state` and return JSX
+    - It is a pure component, do not change `state` or interact with DOM or make ajax calls
+    - Right after rending the parent method, children components lifecycle methods are also executed
+
+4. `componentDidMount()`
+    - Will be called only once in a component. Invoked immediately after a component and all its children components have been rendered to the DOM
+    - It is the prefect place to cause side effects like interact will the DOM or perform any ajax calls to load data
+
+```javascript
+/* eslint-disable no-unused-vars */
+import React, {Component} from 'react'
+
+class LifecycleParent extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            
+        };
+        console.log('LifecycleParent constructor')
+    }
+
+    static getDerivedStateFromProps(props, state) {
+        console.log('LifecycleParent getDerivedStateFromProps')
+        return null
+    }
+
+    componentDidMount() {
+        console.log('LifecycleParent componentDidMount')
+    }
+
+    render() {
+        console.log('LifecycleParent render')
+        return <div>
+            Parent
+            <LifecycleChild />
+        </div>
+    }
+}
+
+class LifecycleChild extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            
+        };
+        console.log('LifecycleChild constructor')
+    }
+
+    static getDerivedStateFromProps(props, state) {
+        console.log('LifecycleChild getDerivedStateFromProps')
+        return null
+    }
+
+    componentDidMount() {
+        console.log('LifecycleChild componentDidMount')
+    }
+
+    render() {
+        console.log('LifecycleChild render')
+        return <div>
+            Child
+        </div>
+    }
+}
+
+export default LifecycleParent
+```
+
+<p align="center">
+  <img src="https://i.ibb.co/wB3kjpB/Mounting-Lifecycle-Methods.png">
+</p>
 
 [Back to Table of Contents](#table-of-contents)
 
