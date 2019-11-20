@@ -523,25 +523,17 @@ console.log(doubled);
 - Keys help `React` identify which items have changed, are added, or are removed
 - `key` helps in efficient update of the user interface by rendering the changed part only
 
+Use `index` as `key`
+```javascript
+const personList = persons.map((p, index) => <Person key={index} p={p} />)
+```
 
+Do **not** use `index` as `key` unless 
+1. The items in your list do not have a unique id. And
+2. the list is a static list and will not change. And
+3. the list will never be reordered orfiltered.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Because `React` uses `key` to judge which part changed then re-render that part. If we CRUD items in the list or sort/filter the list, the index might change, which causes display issue.
 
 [Back to Table of Contents](#table-of-contents)
 
