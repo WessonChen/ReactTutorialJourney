@@ -8,6 +8,7 @@
 6. [setState](#setstate)
 7. [Destructuring props and state](#destructuring-props-and-state)
 8. [Event Handling](#event-handling)
+9. [List](#list)
 
 # Notes
 ## React Notes
@@ -469,6 +470,58 @@ export { ParentComponent }
 
 [Back to Table of Contents](#table-of-contents)
 
+### List
+Consider the following code
+```javascript
+import React from 'react'
+import PropTypes from 'prop-types';
+
+function NameList() {
+    const persons = [
+        {
+            id: 1,
+            name: 'Bruce',
+            age: 25,
+        },
+        {
+            id: 2,
+            name: 'Clark',
+            age: 30,
+        },
+        {
+            id: 3,
+            name: 'Diana',
+            age: 28,
+        },
+    ]
+    const personList = persons.map(p => <Person key={p.id} p={p} />)
+    return <div>{personList}</div>
+}
+
+function Person(props) {
+    return <h2>I am {props.p.name}, I am {props.p.age} years old</h2>
+}
+
+Person.propTypes = {
+    p: PropTypes.object,
+}
+
+export { NameList } 
+```
+
+Map will loop through a array and return a element for each item. And then assign the resulting array of elements to a new array.
+
+```javascript
+const numbers = [1, 2, 3, 4, 5];
+const doubled = numbers.map((number) => number * 2);
+console.log(doubled);
+//[2, 4, 6, 8, 10]
+```
+
+- A `key` is a special string attribute you need to include when creating lists of elements in `React`
+- Keys give the elements a stable identity
+- Keys help `React` identify which items have changed, are added, or are removed
+- `key` helps in efficient update of the user interface by rendering the changed part only
 
 
 
@@ -490,7 +543,7 @@ export { ParentComponent }
 
 
 
-
+[Back to Table of Contents](#table-of-contents)
 
 
 

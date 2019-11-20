@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-import { UserGreeting } from './components/ConditionalRendering';
+import { NameList } from './components/ListRendering';
 
 class App extends Component {
     render() {
         return (
             <div className='app'>
-                <UserGreeting />
+                <NameList />
             </div>
         );
     }
