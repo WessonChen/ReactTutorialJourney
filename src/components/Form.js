@@ -9,7 +9,7 @@ class Form extends Component {
             username: '',
             comments: '',
             topic: 'react',
-            topics: ['react'],
+            topics: [],
         };
 
         this.handleUsernameChange = this.handleUsernameChange.bind(this);
@@ -59,8 +59,8 @@ class Form extends Component {
         const skillsOptions = skills.map(s => <Options key={s.toLowerCase()} skill={s} />);
 
         return (
-            <form onSubmit={this.handleSubmit}>
-                <div>
+            <form onSubmit={this.handleSubmit} className='basic-form'>
+                <div className='text-input'>
                     <label>Username</label>
                     <input
                         type='text'
@@ -68,14 +68,14 @@ class Form extends Component {
                         onChange={this.handleUsernameChange}
                     />
                 </div>
-                <div>
+                <div className='textarea'>
                     <label>Comments</label>
                     <textarea
                         value={comments}
                         onChange={this.handleCommentsChange}
                     />
                 </div>
-                <div>
+                <div className='single-select'>
                     <label>Topic</label>
                     <select
                         value={topic}
@@ -84,7 +84,7 @@ class Form extends Component {
                         {skillsOptions}
                     </select>
                 </div>
-                <div>
+                <div className='multiple-select'>
                     <label>Topics</label>
                     <select
                         multiple={true}
@@ -94,6 +94,7 @@ class Form extends Component {
                         {skillsOptions}
                     </select>
                 </div>
+
                 <button type="submit">Submit</button>
             </form>
         );
