@@ -12,6 +12,8 @@
 10. [Basic Form](#basic-form)
 11. [Component Lifecycle](#component-lifecycle)
 12. [Fragments](#fragments)
+13. [Pure Components](#pure-components)
+14. [Memo](#memo)
 
 # Notes
 ## React Notes
@@ -300,7 +302,7 @@ export default Counter
 3. `React` will group multiple `setState()` calls into a single update for better performance like in `incrementThree()`
 
 <p align="center">
-  <img src="https://i.ibb.co/dWw6fpd/set-State-Grouped.png">
+  <img src="https://i.ibb.co/dWw6fpd/set-State-Grouped.png" style="width: auto; max-height: 300px;">
 </p>
 
 The updated value will not be carried over between the different calls
@@ -1081,6 +1083,7 @@ export { ParentComponent }
 Furthermore, `React.PureComponent`’s `shouldComponentUpdate()` **skips** prop updates for the whole component subtree. Make sure all the children components are also “pure”.
 
 **Shallow Comparison (SC)**
+
 **For Primitive Types** | **For Complex Types**
 :---: | :---:
 `a (SC) b` returns `true` if `a` and `b` have the same value and are of the same type | `a (SC) b` returns `true` if `a` and `b` reference the exact same object
@@ -1088,13 +1091,14 @@ string `name` (SC) string `name` returns `true` | var a = [1, 2]; var b = [1, 2]
 
 [Back to Table of Contents](#table-of-contents)
 
+### Memo
 
 
 
 
 
 
-
+[Back to Table of Contents](#table-of-contents)
 
 
 
