@@ -908,6 +908,14 @@ export default LifecycleParent
   <img src="https://i.ibb.co/XY0JZnT/Updating-Lifecycle-Methods.png">
 </p>
 
+#### Unmounting Lifecycle Methods
+
+1. `componentWillUnmount()`
+    - Method is invoked immediately before a component is unmounted and destroyed
+    - Can preform tasks like cancelling any network requests, removing event handlers, cancelling any subscriptions and also invalidating timers
+    - Do not call the `setState` method
+
+
 [Back to Table of Contents](#table-of-contents)
 
 
