@@ -23,7 +23,7 @@ class RegularComponent extends React.Component {
     }
 }
 
-class ParentComponent extends React.Component {
+class PureComponentParent extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -59,4 +59,4 @@ RegularComponent.propTypes = {
     name: PropTypes.string,
 };
 
-export { ParentComponent }
+export { PureComponentParent }

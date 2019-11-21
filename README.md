@@ -1093,10 +1093,85 @@ string `name` (SC) string `name` returns `true` | var a = [1, 2]; var b = [1, 2]
 
 ### Memo
 
+`React.memo` is similar to `React.PureComponent` but for function components instead of classes.
 
+```javascript
+const MyComponent = React.memo(function MyComponent(props) {
+  /* render using props */
+});
+```
 
+Example:
 
+```javascript
+import React from 'react';
+import PropTypes from 'prop-types';
 
+// eslint-disable-next-line react/display-name
+const MemoComponent = React.memo(function MemoComponent(props) {
+    console.log('Rendering Memo Component')
+    return (
+        <div>
+            {props.name}
+        </div>
+    )
+});
+
+MemoComponent.propTypes = {
+    name: PropTypes.string,
+}
+
+class MemoComponentParent extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            name: ''
+        }
+    }
+
+    componentDidMount() {
+        setInterval(() => {
+            this.setState({
+                name: ''
+            })
+        }, 5000)
+    }
+
+    render() {
+        console.log('------Parant Component Render------')
+        return (
+            <div>
+                Parent Component
+                <MemoComponent name={this.state.name} />
+            </div>
+        )
+    }
+}
+
+export {MemoComponentParent}
+```
+
+If your function component renders the same result given the same props, you can wrap it in a call to `React.memo` for a performance boost in some cases by memoizing the result. This means that React will skip rendering the component, and reuse the last rendered result.
+
+By default it will only shallowly compare complex objects in the props object. If you want control over the comparison, you can also provide a custom comparison function as the second argument.
+
+```javascript
+function MyComponent(props) {
+  /* render using props */
+}
+function areEqual(prevProps, nextProps) {
+  /*
+  return true if passing nextProps to render would return
+  the same result as passing prevProps to render,
+  otherwise return false
+  */
+}
+export default React.memo(MyComponent, areEqual);
+```
+
+This method only exists as a performance optimization. **Do not** rely on it to “prevent” a render, as this can lead to bugs.
+
+Unlike the `shouldComponentUpdate()` method on class components, the `areEqual` function returns `true` if the props are equal and `false` if the props are not equal. This is the inverse from `shouldComponentUpdate`.
 
 [Back to Table of Contents](#table-of-contents)
 
