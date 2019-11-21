@@ -11,6 +11,7 @@
 9. [List](#list)
 10. [Basic Form](#basic-form)
 11. [Component Lifecycle](#component-lifecycle)
+12. [Fragments](#fragments)
 
 # Notes
 ## React Notes
@@ -43,6 +44,7 @@
     - Solution without using `state`
     - Mainly responsible for the UI
     - Also called Stateless/Dumb/Presentational components
+
 2. Class components
     - More feature rich
     - Maintain their own **private** date - state
@@ -923,15 +925,81 @@ export default LifecycleParent
 
 [Back to Table of Contents](#table-of-contents)
 
+### Fragments
 
+Fragments let you group a list of children elements without adding extra nodes to the DOM. For example
 
+```javascript
+import React from 'react'
 
+function NoFragment() {
+    return (
+        <div>
+            <h1>No Fragment Example</h1>
+            <p>This is some random text</p>
+        </div>
+    )
+}
 
+function Fragment() {
+    return (
+        <React.Fragment>
+            <h1>Fragment Example</h1>
+            <p>This is some random text</p>
+        </React.Fragment>
+    )
+}
 
+export {NoFragment, Fragment}
+```
 
+<p align="center">
+    <img src="https://i.ibb.co/Xk1V0Dj/Fragments.png">
+</p>
 
+And in `table` elements, `td` cannot have a child of `div`. For that, we can use fragment
 
+```javascript
+function Table() {
+    return (
+        <table>
+            <tbody>
+                <tr>
+                    <Columns />
+                </tr>
+            </tbody>
+        </table>
+    )
+}
 
+function Columns() {
+    return (
+        <>
+            <td>Name</td>
+            <td>Weicheng</td>
+        </>
+    )
+}
+```
+
+You can use `<></>` the same way you’d use any other element except that it doesn’t support `keys` or `attributes`.
+
+```javascript
+function Glossary() {
+    const items = [{id: 1, term: 'a', description: 'A'}]
+    return (
+      <dl>
+        {items.map(item => (
+          <React.Fragment key={item.id}>
+            <dt>{item.term}</dt>
+            <dd>{item.description}</dd>
+          </React.Fragment>
+        ))}
+      </dl>
+    );
+```
+
+[Back to Table of Contents](#table-of-contents)
 
 
 
