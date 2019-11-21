@@ -302,7 +302,7 @@ export default Counter
 3. `React` will group multiple `setState()` calls into a single update for better performance like in `incrementThree()`
 
 <p align="center">
-  <img src="https://i.ibb.co/dWw6fpd/set-State-Grouped.png" style="width: auto; max-height: 300px;">
+  <img src="https://i.ibb.co/dWw6fpd/set-State-Grouped.png" height="300">
 </p>
 
 The updated value will not be carried over between the different calls
@@ -956,7 +956,7 @@ export {NoFragment, Fragment}
 ```
 
 <p align="center">
-    <img src="https://i.ibb.co/Xk1V0Dj/Fragments.png">
+    <img src="https://i.ibb.co/Xk1V0Dj/Fragments.png" height="200">
 </p>
 
 And in `table` elements, `td` cannot have a child of `div`. For that, we can use fragment
