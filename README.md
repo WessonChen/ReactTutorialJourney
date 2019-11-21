@@ -915,6 +915,11 @@ export default LifecycleParent
     - Can preform tasks like cancelling any network requests, removing event handlers, cancelling any subscriptions and also invalidating timers
     - Do not call the `setState` method
 
+#### Error Handling Lifecycle Methods
+1. `static getDerivedStateFromError()`
+2. `componentDidCatch()`
+
+    - Called when there is an error either during rendering, in a lifecycle method, or in the constructor of any child component
 
 [Back to Table of Contents](#table-of-contents)
 
