@@ -6,8 +6,9 @@ class LifecycleParent extends Component {
         super(props);
 
         this.state = {
-            
+            name: null
         };
+        this.changeState = this.changeState.bind(this)
         console.log('LifecycleParent constructor')
     }
 
@@ -20,10 +21,33 @@ class LifecycleParent extends Component {
         console.log('LifecycleParent componentDidMount')
     }
 
+    shouldComponentUpdate() {
+        console.log('LifecycleParent shouldComponentUpdate')
+        return true
+    }
+
+    getSnapshotBeforeUpdate(prevProps, prevState) {
+        console.log('LifecycleParent getSnapshotBeforeUpdate')
+        return null
+    }
+
+    componentDidUpdate() {
+        console.log('LifecycleParent componentDidUpdate')
+    }
+
+    changeState() {
+        this.setState({
+            name: ''
+        })
+        console.log('------State Changed------')
+    }
+
     render() {
         console.log('LifecycleParent render')
         return <div>
-            Parent
+            <button onClick={this.changeState}>
+                Change State
+            </button>
             <LifecycleChild />
         </div>
     }
@@ -48,11 +72,23 @@ class LifecycleChild extends Component {
         console.log('LifecycleChild componentDidMount')
     }
 
+    shouldComponentUpdate() {
+        console.log('LifecycleChild shouldComponentUpdate')
+        return true
+    }
+
+    getSnapshotBeforeUpdate(prevProps, prevState) {
+        console.log('LifecycleChild getSnapshotBeforeUpdate')
+        return null
+    }
+
+    componentDidUpdate() {
+        console.log('LifecycleChild componentDidUpdate')
+    }
+
     render() {
         console.log('LifecycleChild render')
-        return <div>
-            Child
-        </div>
+        return <div></div>
     }
 }
 

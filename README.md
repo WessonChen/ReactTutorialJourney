@@ -778,6 +778,136 @@ export default LifecycleParent
   <img src="https://i.ibb.co/wB3kjpB/Mounting-Lifecycle-Methods.png">
 </p>
 
+#### Updating Lifecycle Methods
+
+1. `static getDerivedStateFromProps(props, state)`
+    - rarely used when the `state` of the component depends on changes in `props` over time
+    - set the `state` by returning a state **object**
+    - Should not cause side effects like HTTP requests
+
+2. `shouldComponentUpdate(nextProps, nextState)`
+    - Dictates if the component should re-render or not
+    - By default, components will render whenever the `props` they receive or their `state` changes. This method can prevent the default behavior by returning `false`
+    - For performance optimization
+    - Should not cause side effects like HTTP requests or calling the `setState` method
+
+3. `render()`
+    - The only required method
+    - Read `props` & `state` and return JSX
+    - It is a pure component, do not change `state` or interact with DOM or make ajax calls
+    - Right after rending the parent method, children components lifecycle methods are also executed
+
+4. `getSnapshotBeforeUpdate(prevProps, prevState)`
+    - Called right before the changes from the virtural DOM are to be reflected in the DOM
+    - Capture some information from the DOM
+    - Method will either return `null` or return a value. Returned value will be passed as the third parameter to the `componentDidUpdate()`
+
+5. `componentDidUpdate(prevProps, prevState, snapshot)`
+    - Called after the render is finished in the re-render cycles
+    - Is guaranteed once and once only in a re-render lifecycle. So you can cause side effects
+
+```javascript
+/* eslint-disable no-unused-vars */
+import React, {Component} from 'react'
+
+class LifecycleParent extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            name: null
+        };
+        this.changeState = this.changeState.bind(this)
+        console.log('LifecycleParent constructor')
+    }
+
+    static getDerivedStateFromProps(props, state) {
+        console.log('LifecycleParent getDerivedStateFromProps')
+        return null
+    }
+
+    componentDidMount() {
+        console.log('LifecycleParent componentDidMount')
+    }
+
+    shouldComponentUpdate() {
+        console.log('LifecycleParent shouldComponentUpdate')
+        return true
+    }
+
+    getSnapshotBeforeUpdate(prevProps, prevState) {
+        console.log('LifecycleParent getSnapshotBeforeUpdate')
+        return null
+    }
+
+    componentDidUpdate() {
+        console.log('LifecycleParent componentDidUpdate')
+    }
+
+    changeState() {
+        this.setState({
+            name: ''
+        })
+        console.log('------State Changed------')
+    }
+
+    render() {
+        console.log('LifecycleParent render')
+        return <div>
+            <button onClick={this.changeState}>
+                Change State
+            </button>
+            <LifecycleChild />
+        </div>
+    }
+}
+
+class LifecycleChild extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            
+        };
+        console.log('LifecycleChild constructor')
+    }
+
+    static getDerivedStateFromProps(props, state) {
+        console.log('LifecycleChild getDerivedStateFromProps')
+        return null
+    }
+
+    componentDidMount() {
+        console.log('LifecycleChild componentDidMount')
+    }
+
+    shouldComponentUpdate() {
+        console.log('LifecycleChild shouldComponentUpdate')
+        return true
+    }
+
+    getSnapshotBeforeUpdate(prevProps, prevState) {
+        console.log('LifecycleChild getSnapshotBeforeUpdate')
+        return null
+    }
+
+    componentDidUpdate() {
+        console.log('LifecycleChild componentDidUpdate')
+    }
+
+    render() {
+        console.log('LifecycleChild render')
+        return <div></div>
+    }
+}
+
+export default LifecycleParent
+```
+
+<p align="center">
+  <img src="https://i.ibb.co/XY0JZnT/Updating-Lifecycle-Methods.png">
+</p>
+
 [Back to Table of Contents](#table-of-contents)
 
 
