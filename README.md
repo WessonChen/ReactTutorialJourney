@@ -1001,19 +1001,92 @@ function Glossary() {
 
 [Back to Table of Contents](#table-of-contents)
 
+### Pure Components
 
+**Regular Component** | **Pure Component**
+:---: | :---:
+A regular component does not implement the `shouldComponentUpdate` method. It always returns `true` by default | A pure component on the other hand implements `shouldComponentUpdate` with a shallow `props` and `state` comparison
 
+```javascript
+import React from 'react';
+import PropTypes from 'prop-types';
 
+class PureComponent extends React.PureComponent {
+    render() {
+        console.log('Pure Component Render')
+        return (
+            <div>
+                Pure Component {this.props.name}
+            </div>
+        )
+    }
+}
 
+class RegularComponent extends React.Component {
+    render() {
+        console.log('Regular Component Render')
+        return (
+            <div>
+                Regular Component {this.props.name}
+            </div>
+        )
+    }
+}
 
+class ParentComponent extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            name: ''
+        }
+    }
 
+    componentDidMount() {
+        setInterval(() => {
+            this.setState({
+                name: ''
+            })
+        }, 5000)
+    }
 
+    render() {
+        console.log('------Parant Component Render------')
+        return (
+            <div>
+                Parent Component
+                <RegularComponent name={this.state.name} />
+                <PureComponent name={this.state.name} />
+            </div>
+        )
+    }
+}
 
+PureComponent.propTypes = {
+    name: PropTypes.string,
+};
 
+RegularComponent.propTypes = {
+    name: PropTypes.string,
+};
 
+export { ParentComponent }
+```
 
+<p align='center'>
+    <img src='https://i.ibb.co/hLxxPdv/Pure-Component.png'>
+</p>
 
+`React.PureComponent`’s `shouldComponentUpdate()` only shallowly compares the objects. If these contain complex data structures, it may produce false-negatives for deeper differences. **Only extend** `PureComponent` when you expect to have simple `props` and `state`, or use [forceUpdate()](https://reactjs.org/docs/react-component.html#forceupdate) when you know deep data structures have changed. Or, consider using [immutable objects](https://immutable-js.github.io/immutable-js/) to facilitate fast comparisons of nested data.
 
+Furthermore, `React.PureComponent`’s `shouldComponentUpdate()` **skips** prop updates for the whole component subtree. Make sure all the children components are also “pure”.
+
+**Shallow Comparison (SC)**
+**For Primitive Types** | **For Complex Types**
+:---: | :---:
+`a (SC) b` returns `true` if `a` and `b` have the same value and are of the same type | `a (SC) b` returns `true` if `a` and `b` reference the exact same object
+string `name` (SC) string `name` returns `true` | var a = [1, 2]; var b = [1, 2]; var c = a; var a_eq_b = (a===b); //`false`; var a_eq_c = (a===c); //`true`
+
+[Back to Table of Contents](#table-of-contents)
 
 
 

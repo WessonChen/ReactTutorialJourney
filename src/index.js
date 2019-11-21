@@ -1,15 +1,12 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-import { NoFragment, Fragment, Table, Glossary } from './components/Fragments';
+import { ParentComponent } from './components/PureComponent';
 
 class App extends Component {
     render() {
         return (
             <div className='app'>
-                <NoFragment />
-                <Fragment />
-                <Table />
-                <Glossary />
+                <ParentComponent />
             </div>
         );
     }
