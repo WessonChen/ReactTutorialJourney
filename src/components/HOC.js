@@ -22,9 +22,10 @@ const updatedComponent = (OriginalComponent) => {
         render() {
             return (
                 <OriginalComponent
-                    name='Weicheng'
+                    propsInHOC='propsInHOC'
                     count={this.state.count}
-                    incrementByOne={this.incrementByOne}
+                    incrementByOne={this.incrementByOne} 
+                    {... this.props}
                 />
             );
         }
@@ -34,10 +35,10 @@ const updatedComponent = (OriginalComponent) => {
 
 class ClickCounter extends Component {
     render() {
-        const { name, count, incrementByOne } = this.props;
+        const { propsInHOC, count, incrementByOne } = this.props;
         return (
             <button onClick={incrementByOne}>
-                {name} clicked {count} times
+                {propsInHOC} clicked {count} times
             </button>
         )
     }
@@ -45,23 +46,23 @@ class ClickCounter extends Component {
 
 class HoverCounter extends Component {
     render() {
-        const { name, count, incrementByOne } = this.props;
+        const { propsInHover, count, incrementByOne } = this.props;
         return (
             <h2 onMouseOver={incrementByOne}>
-                {name} hovered {count} times
+                {propsInHover} hovered {count} times
             </h2>
         )
     }
 }
 
 ClickCounter.propTypes = {
-    name: PropTypes.string,
+    propsInHOC: PropTypes.string,
     count: PropTypes.any,
     incrementByOne: PropTypes.func
 }
 
 HoverCounter.propTypes = {
-    name: PropTypes.string,
+    propsInHover: PropTypes.string,
     count: PropTypes.any,
     incrementByOne: PropTypes.func
 }

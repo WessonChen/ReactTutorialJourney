@@ -7,7 +7,7 @@ class App extends Component {
         return (
             <div className='app'>
                 <ClickCounterHOC />
-                <HoverCounterHOC />
+                <HoverCounterHOC propsInHover='propsInHover'/>
             </div>
         );
     }
