@@ -8,30 +8,50 @@ class CreateRef extends Component {
         this.setCallBackRef = (element) => {
             this.callBackRef = element
         };
-        this.clickHandler = this.clickHandler.bind(this);
+        this.clickHandlerChild = this.clickHandlerChild.bind(this);
     }
 
     componentDidMount() {
-        // console.log(this.inputRef);
-        // this.inputRef.current.focus();
         if (this.callBackRef) {
             this.callBackRef.focus();
         }
     }
 
-    clickHandler() {
-        alert(this.inputRef.current.value);
+    clickHandlerChild() {
+        let node = this.inputRef.current;
+        node.focus();
     }
 
     render() {
         return (
             <div>
-                <input type='text' ref={this.inputRef}/>
-                <input type='text' ref={this.setCallBackRef}/>
-                <button onClick={this.clickHandler}>Click me!</button>
+                <input type='text' ref={this.inputRef} />
+                <input type='text' ref={this.setCallBackRef} />
+                <button onClick={this.clickHandlerChild}>Click from child to focus</button>
             </div>
         );
     }
 }
 
-export {CreateRef}
+class CreateRefParent extends Component {
+    constructor(props) {
+        super(props);
+        this.textInputRef = React.createRef();
+        this.clickHandlerParent = this.clickHandlerParent.bind(this);
+    }
+
+    clickHandlerParent() {
+        this.textInputRef.current.clickHandlerChild();
+    }
+
+    render() {
+        return (
+            <>
+                <CreateRef ref={this.textInputRef} />
+                <button onClick={this.clickHandlerParent}>Click from parent to focus</button>
+            </>
+        );
+    }
+}
+
+export { CreateRefParent }

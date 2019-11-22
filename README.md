@@ -1177,6 +1177,77 @@ Unlike the `shouldComponentUpdate()` method on class components, the `areEqual` 
 
 ### Refs
 
+Refs provide a way to access DOM nodes or React elements created in the render method.
+
+In the typical React dataflow, `props` are the only way that parent components interact with their children. To modify a child, you re-render it with new props. However, there are a few cases where you need to imperatively modify a child outside of the typical dataflow. The child to be modified could be an instance of a React component, or it could be a DOM element. For both of these cases, React provides an escape hatch.
+
+**When to Use Refs**
+There are a few good use cases for refs:
+
+- Managing focus, text selection, or media playback.
+- Triggering imperative animations.
+- Integrating with third-party DOM libraries.
+
+Avoid using refs for anything that can be done declaratively.
+
+**Don’t Overuse Refs**
+
+Your first inclination may be to use refs to “make things happen” in your app. If this is the case, take a moment and think more critically about where state should be owned in the component hierarchy. Often, it becomes clear that the proper place to “own” that state is at a higher level in the hierarchy. See the [Lifting State Up](https://reactjs.org/docs/lifting-state-up.html) guide for examples of this.
+
+**Refs and Function Components**
+
+You may not use the ref attribute **on** function components because they don’t have instances:
+
+```javascript
+function MyFunctionComponent() {
+  return <input />;
+}
+
+class Parent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.textInput = React.createRef();
+  }
+  render() {
+    // This will *not* work!
+    return (
+      <MyFunctionComponent ref={this.textInput} />
+    );
+  }
+}
+```
+
+You should convert the component to a class if you need a ref to it, just like you do when you need lifecycle methods or state.
+
+You can, however, use the ref attribute **inside** a function component as long as you refer to a DOM element or a class component:
+
+```javascript
+function CustomTextInput(props) {
+  // textInput must be declared here so the ref can refer to it
+  let textInput = React.createRef();
+
+  function handleClick() {
+    textInput.current.focus();
+  }
+
+  return (
+    <div>
+      <input
+        type="text"
+        ref={textInput} />
+
+      <input
+        type="button"
+        value="Focus the text input"
+        onClick={handleClick}
+      />
+    </div>
+  );
+}
+```
+
+This is a example of how to create refs, access refs and how to use callback refs in older version.
+
 ```javascript
 import React, { Component } from 'react';
 
