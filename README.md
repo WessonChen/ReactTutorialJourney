@@ -17,6 +17,7 @@
 15. [Refs](#refs)
 16. [Forwarding Refs](#forwarding-refs)
 17. [Portals](#portals)
+18. [Error Boundary](#error-boundary)
 
 # Notes
 ## React Notes
@@ -1444,14 +1445,87 @@ export { Parent }
 
 [Back to Table of Contents](#table-of-contents)
 
+### Error Boundary
 
+A JavaScript error in a part of the UI shouldn’t break the whole app. To solve this problem for React users, React 16 introduces a new concept of an “error boundary”.
 
+Error boundaries are React components that **catch JavaScript errors anywhere in their child component tree, log those errors, and display a fallback UI** instead of the component tree that crashed. Error boundaries catch errors during rendering, in lifecycle methods, and in constructors of the whole tree below them.
 
+A class component becomes an error boundary if it defines either (or both) of the lifecycle methods `static getDerivedStateFromError()` or `componentDidCatch()`. Use `static getDerivedStateFromError()` to render a fallback UI after an error has been thrown. Use `componentDidCatch()` to log error information.
 
+```javascript
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
+const heros = ['Batman', 'Superman', 'Joker'];
 
+function Hero(props) {
+    if (props.name === 'Joker') {
+        throw new Error('Not a hero');
+    }
+    return (
+        <div>
+            {props.name}
+        </div>
+    )
+}
 
+class ErrorBoundary extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            error: null,
+            errorInfo: null,
+        }
+    }
 
+    componentDidCatch(error, errorInfo) {
+        this.setState({
+            error: error,
+            errorInfo: errorInfo,
+        })
+    }
+
+    render() {
+        if (this.state.errorInfo) {
+            return (
+                <div>
+                    <h2>Something went wrong.</h2>
+                    <details style={{ whiteSpace: 'pre-wrap' }}>
+                        {this.state.error && this.state.error.toString()}
+                        <br />
+                        {this.state.errorInfo.componentStack}
+                    </details>
+                </div>
+            );
+        }
+        return (
+            this.props.children
+        )
+    }
+}
+
+function Heros() {
+    const heroList = heros.map((h, i) => <ErrorBoundary key={i}><Hero name={h}/></ErrorBoundary>);
+    return <>{heroList}</>
+}
+
+Hero.propTypes = {
+    name: PropTypes.string.isRequired,
+}
+
+ErrorBoundary.propTypes = {
+    children: PropTypes.node,
+}
+
+export default Heros
+```
+
+<p align='center'>
+    <img src='https://i.ibb.co/8zNtR7K/Error-Boundary.png' height='350'>
+</p>
+
+[Back to Table of Contents](#table-of-contents)
 
 
 
