@@ -1357,15 +1357,90 @@ In this example, the arrow function is passed as a parameter to the `React.forwa
 
 ### Portals
 
+Portals provide a first-class way to render children into a DOM node that exists outside the DOM hierarchy of the parent component.
 
+```javascript
+ReactDOM.createPortal(child, container)
+```
 
+The first argument `child` is any renderable React child, such as an element, string, or fragment. The second argument `container` is a DOM element.
 
+For example,
 
+```javascript
+function Normal() {
+    return (
+        <h1>Portal</h1>
+    )
+}
 
+function Portal() {
+    return ReactDOM.createPortal(
+        <h1>Portal</h1>, document.getElementById('portal')
+    )
+}
+```
 
+The function `Normal` will render the `h1` to `root` element, and the function `Portal` will render the `h1` to `portal` element. Features like context work exactly the same regardless of whether the child is a portal, as the portal still exists in the React tree regardless of position in the DOM tree.
 
+**Event Bubbling Through Portals**
 
+Even though a portal can be anywhere in the DOM tree, it behaves like a normal React child in every other way.
 
+```javascript
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+const modalRoot = document.getElementById('portal');
+
+class Modal extends React.Component {
+    render() {
+        return ReactDOM.createPortal(
+            this.props.children, modalRoot
+        );
+    }
+}
+
+class Parent extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = { clicks: 0 };
+        this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick() {
+        this.setState(prevState => ({
+            clicks: prevState.clicks + 1
+        }));
+    }
+
+    render() {
+        return (
+            <div onClick={this.handleClick}>
+                <p>Number of clicks: {this.state.clicks}</p>
+                <p>
+                    Open up the browser DevTools to observe that the button is not a child of the div with the onClick handler.
+        </p>
+                <Modal>
+                    <Child />
+                </Modal>
+            </div>
+        );
+    }
+}
+
+function Child() {
+    // The click event on this button will bubble up to parent,
+    // because there is no 'onClick' attribute defined
+    return (
+        <div className="modal">
+            <button>Click</button>
+        </div>
+    );
+}
+
+export { Parent }
+```
 
 [Back to Table of Contents](#table-of-contents)
 
