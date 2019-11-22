@@ -18,6 +18,7 @@
 16. [Forwarding Refs](#forwarding-refs)
 17. [Portals](#portals)
 18. [Error Boundary](#error-boundary)
+19. [Higher Order Components](#higher-order-components)
 
 # Notes
 ## React Notes
@@ -1527,17 +1528,98 @@ export default Heros
 
 [Back to Table of Contents](#table-of-contents)
 
+### Higher Order Components
+
+A higher-order component (HOC) is an advanced technique in React for reusing component logic.
+
+For example, we may have lots of components which contains `counter` function by increasing state by 1. In this case, HOC helps to share common functionality between components.
+
+HOC is a pattern where a function takes a component as an argument and returns a new component.
+
+```javascript
+const EnhancedComponent = higherOrderComponent(WrappedComponent)
+// const IronMan = withSuit(TonyStark)
+```
+
+```javascript
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
+const updatedComponent = (OriginalComponent) => {
+    class NewComponent extends Component {
+        constructor(props) {
+            super(props);
+            this.state = {
+                count: 0
+            };
+            this.incrementByOne = this.incrementByOne.bind(this);
+        }
+
+        incrementByOne() {
+            this.setState(prevState => {
+                return {
+                    count: prevState.count + 1
+                };
+            });
+        }
+
+        render() {
+            return (
+                <OriginalComponent
+                    name='Weicheng'
+                    count={this.state.count}
+                    incrementByOne={this.incrementByOne}
+                />
+            );
+        }
+    }
+    return NewComponent;
+}
+
+class ClickCounter extends Component {
+    render() {
+        const { name, count, incrementByOne } = this.props;
+        return (
+            <button onClick={incrementByOne}>
+                {name} clicked {count} times
+            </button>
+        )
+    }
+}
+
+class HoverCounter extends Component {
+    render() {
+        const { name, count, incrementByOne } = this.props;
+        return (
+            <h2 onMouseOver={incrementByOne}>
+                {name} hovered {count} times
+            </h2>
+        )
+    }
+}
+
+ClickCounter.propTypes = {
+    name: PropTypes.string,
+    count: PropTypes.any,
+    incrementByOne: PropTypes.func
+}
+
+HoverCounter.propTypes = {
+    name: PropTypes.string,
+    count: PropTypes.any,
+    incrementByOne: PropTypes.func
+}
+
+export const ClickCounterHOC = updatedComponent(ClickCounter);
+export const HoverCounterHOC = updatedComponent(HoverCounter);
+```
 
 
 
 
 
 
-
-
-
-
-
+[Back to Table of Contents](#table-of-contents)
 
 
 
