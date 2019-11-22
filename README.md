@@ -14,6 +14,9 @@
 12. [Fragments](#fragments)
 13. [Pure Components](#pure-components)
 14. [Memo](#memo)
+15. [Refs](#refs)
+16. [Forwarding Refs](#forwarding-refs)
+17. [Portals](#portals)
 
 # Notes
 ## React Notes
@@ -1310,6 +1313,49 @@ export { CreateRefParent }
 
 [Back to Table of Contents](#table-of-contents)
 
+### Forwarding Refs
+
+```javascript
+import React from 'react';
+
+// eslint-disable-next-line react/display-name
+const FRChild = React.forwardRef((props, ref) => {
+    return (
+        <div>
+            <input type='text' ref={ref}/>
+        </div>
+    )
+})
+
+class FRParent extends React.Component {
+    constructor(props) {
+        super(props);
+        this.inputRef = React.createRef();
+        this.clickHandler = this.clickHandler.bind(this)
+    }
+
+    clickHandler() {
+        this.inputRef.current.focus();
+    }
+
+    render() {
+        return (
+            <>
+                <FRChild ref={this.inputRef} />
+                <button onClick={this.clickHandler}>Focus Input</button>
+            </>
+        )
+    }
+}
+
+export {FRParent}
+```
+
+In this example, the arrow function is passed as a parameter to the `React.forwardRef()`. We know that every functional component receives `props` as its parameter, but when a component is passed as a parameter to the `React.forwardRef()` method, it recieves `ref` attribute as its second parameter. We can use this `ref` parameter and pass it as a value to the `ref` attribute on the native input element. So, `ref={ref}` assigns the `ref` from the parameter which from the parent component. Or in the other words, the `ref` is being forwarded from the parent component to the native input element.
+
+[Back to Table of Contents](#table-of-contents)
+
+### Portals
 
 
 
@@ -1321,25 +1367,7 @@ export { CreateRefParent }
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+[Back to Table of Contents](#table-of-contents)
 
 
 

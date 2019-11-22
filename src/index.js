@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-import { CreateRefParent } from './components/Refs';
+import { FRParent } from './components/ForwardingRefs';
 
 class App extends Component {
     render() {
         return (
             <div className='app'>
-                <CreateRefParent />
+                <FRParent />
             </div>
         );
     }
