@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-const updatedComponent = (OriginalComponent) => {
+const updatedComponent = (OriginalComponent, incrementNumber) => {
     class NewComponent extends Component {
         constructor(props) {
             super(props);
@@ -14,7 +14,7 @@ const updatedComponent = (OriginalComponent) => {
         incrementByOne() {
             this.setState(prevState => {
                 return {
-                    count: prevState.count + 1
+                    count: prevState.count + incrementNumber
                 };
             });
         }
@@ -67,5 +67,5 @@ HoverCounter.propTypes = {
     incrementByOne: PropTypes.func
 }
 
-export const ClickCounterHOC = updatedComponent(ClickCounter);
-export const HoverCounterHOC = updatedComponent(HoverCounter);
+export const ClickCounterHOC = updatedComponent(ClickCounter, 10);
+export const HoverCounterHOC = updatedComponent(HoverCounter, 5);
