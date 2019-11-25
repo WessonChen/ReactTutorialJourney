@@ -22,7 +22,8 @@
 20. [Render Props](#render-props)
 21. [Context](#context)
 22. [HTTP](#http)
-## [Hooks](#hooks-notes)
+## [Hook](#hook-notes)
+1. [Introduction](#introduction)
 
 # Notes
 ## React Notes
@@ -1895,18 +1896,18 @@ Also, we can use a third-part library [Formik](https://github.com/jaredpalmer/fo
 
 [Back to Table of Contents](#table-of-contents)
 
-## Hooks Notes
+## Hook Notes
+### Introduction
+**What is the `Hook`**
 
+`Hook` is a new feature addition in React version 16.8. It allow you to use React features without having to write a class. `Hook` do not replace your existing knowledge of React concepts. Instead, `Hook` provide a more direct API to the React concepts you already know.
 
+**Why should we use `Hook`**
+1. Avoid the whole confusion with `this` keyword
+2. Allow you to reuse stateful logic
+3. Organize the logic inside a component into reusable isolated units
 
-
-
-
-
-
-
-
-
+For More infomation, check [Official Docs](https://reactjs.org/docs/hooks-intro.html#motivation).
 
 [Back to Table of Contents](#table-of-contents)
 
