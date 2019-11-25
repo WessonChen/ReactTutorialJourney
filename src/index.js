@@ -1,13 +1,12 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-import { ClickCounterHOC, HoverCounterHOC } from './components/HOC';
+import MouseTracker from './components/RenderProps';
 
 class App extends Component {
     render() {
         return (
             <div className='app'>
-                <ClickCounterHOC />
-                <HoverCounterHOC propsInHover='propsInHover'/>
+                <MouseTracker />
             </div>
         );
     }
