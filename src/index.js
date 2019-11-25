@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-import MouseTracker from './components/RenderProps';
+import Context from './components/Context';
 
 class App extends Component {
     render() {
         return (
             <div className='app'>
-                <MouseTracker />
+                <Context />
             </div>
         );
     }

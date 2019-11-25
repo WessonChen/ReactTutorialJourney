@@ -20,6 +20,7 @@
 18. [Error Boundary](#error-boundary)
 19. [Higher Order Components](#higher-order-components)
 20. [Render Props](#render-props)
+21. [Context](#context)
 
 # Notes
 ## React Notes
@@ -1708,8 +1709,60 @@ export default MouseTracker
 
 [Back to Table of Contents](#table-of-contents)
 
+### Context
 
+Context provides a way to pass data through the component tree without having to pass props down manually at every level.
 
+**When to Use Context**
 
+Context is designed to share data that can be considered “global” for a tree of React components, such as the current authenticated user, theme, or preferred language.
 
+```javascript
+import React from 'react';
 
+// Context lets us pass a value deep into the component tree
+// without explicitly threading it through every component.
+// Create a context for the current theme (with "light" as the default).
+const ThemeContext = React.createContext('light');
+const UserContext = React.createContext();
+
+class Context extends React.Component {
+    render() {
+        return (
+            <UserContext.Provider value='Guest'>
+                <Toolbar />
+            </UserContext.Provider>
+        );
+    }
+}
+
+// A component in the middle doesn't have to
+// pass the theme down explicitly anymore.
+function Toolbar() {
+    return (
+        <div>
+            <ThemedButton />
+        </div>
+    );
+}
+
+class ThemedButton extends React.Component {
+    render() {
+        return (
+            <ThemeContext.Consumer>
+                {theme => (
+                    <UserContext.Consumer>
+                        {user => (
+                            <button>theme={theme} user={user}</button>
+                        )}
+                    </UserContext.Consumer>
+                )}
+            </ThemeContext.Consumer>
+        );
+    }
+}
+
+export default Context
+```
+
+[Back to Table of Contents](#table-of-contents)
