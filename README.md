@@ -21,6 +21,7 @@
 19. [Higher Order Components](#higher-order-components)
 20. [Render Props](#render-props)
 21. [Context](#context)
+22. [HTTP](#http)
 
 # Notes
 ## React Notes
@@ -1766,3 +1767,127 @@ export default Context
 ```
 
 [Back to Table of Contents](#table-of-contents)
+
+### HTTP
+
+We are using [Axios](#https://github.com/axios/axios) in this section.
+
+Example of `Get`
+
+```javascript
+import React, { Component } from 'react';
+import Axios from 'axios';
+
+class GetExample extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            posts: []
+        }
+    }
+
+    componentDidMount() {
+        Axios.get('https://jsonplaceholder.typicode.com/posts')
+            .then(response => {
+                this.setState({
+                    posts: response.data
+                })
+            })
+            .catch(error => {
+                console.log(error)
+            });
+    }
+
+    render() {
+        return (
+            <>
+            </>
+        );
+    }
+}
+
+export { GetExample }
+```
+
+[Back to Table of Contents](#table-of-contents)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
