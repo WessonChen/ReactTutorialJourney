@@ -666,7 +666,8 @@ Options.propTypes = {
 
 export { Form }
 ```
-Check [Official Docs](https://reactjs.org/docs/forms.html) for more info.
+Check [Official Docs](#https://reactjs.org/docs/forms.html) for more info.
+Also, we can use a third-part library [Formik](#https://github.com/jaredpalmer/formik) for form validation.
 
 [Back to Table of Contents](#table-of-contents)
 
@@ -1772,7 +1773,7 @@ export default Context
 
 We are using [Axios](#https://github.com/axios/axios) in this section.
 
-Example of `Get`
+Example of `Get` and `Post`
 
 ```javascript
 import React, { Component } from 'react';
@@ -1806,7 +1807,86 @@ class GetExample extends Component {
     }
 }
 
-export { GetExample }
+class PostExample extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            userId: '',
+            title: '',
+            body: ''
+        }
+        this.handleBodyChange = this.handleBodyChange.bind(this);
+        this.handleTitleChange = this.handleTitleChange.bind(this);
+        this.handleUserIdChange = this.handleUserIdChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleBodyChange(event) {
+        this.setState({
+            [event.target.name]: event.target.value
+        });
+    }
+    handleTitleChange(event) {
+        this.setState({
+            [event.target.name]: event.target.value
+        });
+    }
+    handleUserIdChange(event) {
+        this.setState({
+            [event.target.name]: event.target.value
+        });
+    }
+    handleSubmit(event) {
+        event.preventDefault();
+        Axios.post('https://jsonplaceholder.typicode.com/posts', this.state)
+            .then(response => (
+                console.log(response)
+            ))
+            .catch(error => (
+                console.log(error)
+            ));
+    }
+
+    render() {
+        const { userId, title, body } = this.state;
+        return (
+            <form onSubmit={this.handleSubmit}>
+                <div>
+                    <label htmlFor='userId'>User Id</label>
+                    <input
+                        type='number'
+                        value={userId}
+                        onChange={this.handleUserIdChange} 
+                        id='userId' 
+                        name='userId'
+                    />
+                </div>
+                <div>
+                    <label htmlFor='title'>Title</label>
+                    <input
+                        type='text'
+                        value={title}
+                        onChange={this.handleTitleChange}
+                        id='title'
+                        name='title'
+                    />
+                </div>
+                <div>
+                    <label htmlFor='body'>Body</label>
+                    <textarea
+                        value={body}
+                        onChange={this.handleBodyChange}
+                        id='body' 
+                        name='body'
+                    />
+                </div>
+                <button type='submit'>Submit</button>
+            </form>
+        )
+    }
+}
+
+export { GetExample, PostExample }
 ```
 
 [Back to Table of Contents](#table-of-contents)

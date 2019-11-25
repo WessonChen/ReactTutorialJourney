@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-import { GetExample } from './components/HTTP';
+import { GetExample, PostExample } from './components/HTTP';
 
 class App extends Component {
     render() {
         return (
             <div className='app'>
                 <GetExample /> 
+                <PostExample />
             </div>
         );
     }
