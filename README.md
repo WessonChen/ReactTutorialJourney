@@ -666,8 +666,9 @@ Options.propTypes = {
 
 export { Form }
 ```
-Check [Official Docs](#https://reactjs.org/docs/forms.html) for more info.
-Also, we can use a third-part library [Formik](#https://github.com/jaredpalmer/formik) for form validation.
+Check [Official Docs](https://reactjs.org/docs/forms.html) for more info.
+
+Also, we can use a third-part library [Formik](https://github.com/jaredpalmer/formik) for form validation.
 
 [Back to Table of Contents](#table-of-contents)
 
@@ -1888,6 +1889,8 @@ class PostExample extends Component {
 
 export { GetExample, PostExample }
 ```
+
+Also, we can use a third-part library [Formik](https://github.com/jaredpalmer/formik) for form validation.
 
 [Back to Table of Contents](#table-of-contents)
 
