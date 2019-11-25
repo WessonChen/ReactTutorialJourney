@@ -22,6 +22,7 @@
 20. [Render Props](#render-props)
 21. [Context](#context)
 22. [HTTP](#http)
+## [Hooks](#hooks-notes)
 
 # Notes
 ## React Notes
@@ -1894,6 +1895,7 @@ Also, we can use a third-part library [Formik](https://github.com/jaredpalmer/fo
 
 [Back to Table of Contents](#table-of-contents)
 
+## Hooks Notes
 
 
 
@@ -1906,6 +1908,7 @@ Also, we can use a third-part library [Formik](https://github.com/jaredpalmer/fo
 
 
 
+[Back to Table of Contents](#table-of-contents)
 
 
 
