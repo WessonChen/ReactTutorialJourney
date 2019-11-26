@@ -1918,8 +1918,10 @@ For More infomation, check [Official Docs](https://reactjs.org/docs/hooks-intro.
 **Rules of Hooks**
 
 1. Only Call Hooks at the Top Level
+
     Don’t call Hooks inside loops, conditions, or nested functions. Because React relies on the order in which Hooks are called to know which state corresponds to which hook.
 2. Only Call Hooks from React Functions
+
     Don’t call Hooks from regular JavaScript functions.
 
 Here is an example of `useState Hook`
@@ -1933,6 +1935,26 @@ function ButtonClicker() {
     )
 }
 ```
+
+Still, if we want to update `state` based on the previous state, we should use function as parameter.
+
+```javascript
+function ButtonClicker() {
+    const initialCount = 0;
+    const [count, setCount] = useState(initialCount);
+
+    return (
+        <>
+            <p>Count {count}</p>
+            <button onClick={() => setCount(initialCount)}>Reset</button>
+            <button onClick={() => setCount(count + 1)}>Increment</button>
+            <button onClick={() => setCount(prevCount => prevCount + 1)}>Increment</button>
+        </>
+    )
+}
+```
+
+
 
 [Back to Table of Contents](#table-of-contents)
 
