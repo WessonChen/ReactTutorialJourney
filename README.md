@@ -24,7 +24,8 @@
 22. [HTTP](#http)
 ## [Hook](#hook-notes)
 1. [Introduction](#introduction)
-2. [useState](#useState)
+2. [useState](#usestate)
+3. [useEffect](#useeffect)
 
 # Notes
 ## React Notes
@@ -2010,14 +2011,32 @@ function ArrayAsState() {
 
 [Back to Table of Contents](#table-of-contents)
 
+### useEffect
+Imagine when we want to set page title and a timer in class component, we will have:
 
+```javascript
+componentDidMount() {
+    document.title = `${this.state.count} times`;
+    this.interval = setInterval(this.tick, 1000);
+}
 
+componentDidUpdate() {
+    document.title = `${this.state.count} times`;
+}
 
+componentWillUnmount() {
+    clearInterval(this.interval);
+}
+```
 
+In this case, when we set the title, we have the same code twice, which violates **Don't repeat yourself**(DRY). And when we set and clear timer, the logically connected code divided into two function. However, in componentDidMount function, we have irrelevant code grouped together.
 
+This is why we should use hook.
 
+- The Effect Hook lets you perform side effects in functional components
+- It is a close replacement for `componentDidMount`, `componentDidUpdate` and `componentWillUnmount`
 
-
+[Back to Table of Contents](#table-of-contents)
 
 
 
