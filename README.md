@@ -2047,10 +2047,35 @@ function TitleChanger() {
     });
 
     return (
-        <button onClick={() => setCount(prev => prev + 1)}>Count Adder</button>
+        <button onClick={() => setCount(prev => prev + 1)}>Title Count Adder</button>
     )
 }
 ```
+
+In the case above, the `useEffect` will update title after every single change even when the `count` is the same. We can pass a array as the second argument to optimize performance.
+
+```javascript
+function TitleChanger() {
+    const [count, setCount] = useState(0);
+    const [useEffectCount, setUseEffectCount] = useState(0);
+    const [name, setName] = useState('');
+
+    useEffect(() => {
+        document.title = `${count} times`;
+        setUseEffectCount(prev => prev + 1);
+    }, [count]);
+
+    return (
+        <>
+            <button onClick={() => setCount(prev => prev + 1)}>Title Count Adder</button>
+            <p>The useEffect updated {useEffectCount} times</p>
+            <input type='text' value={name} onChange={n => setName(n.target.value)}></input>
+        </>
+    )
+}
+```
+
+In the example above, we pass `[count]` as the second argument. If the count is 5, and then our component re-renders with count still equal to 5, React will compare `[5]` from the previous render and `[5]` from the next render. Because all items in the array are the same (5 === 5), React would skip the effect.
 
 [Back to Table of Contents](#table-of-contents)
 
