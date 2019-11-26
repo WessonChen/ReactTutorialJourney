@@ -2036,6 +2036,22 @@ This is why we should use hook.
 - The Effect Hook lets you perform side effects in functional components
 - It is a close replacement for `componentDidMount`, `componentDidUpdate` and `componentWillUnmount`
 
+This is an example of how we use effect hook:
+
+```javascript
+function TitleChanger() {
+    const [count, setCount] = useState(0);
+
+    useEffect(() => {
+        document.title = `${count} times`
+    });
+
+    return (
+        <button onClick={() => setCount(prev => prev + 1)}>Count Adder</button>
+    )
+}
+```
+
 [Back to Table of Contents](#table-of-contents)
 
 
