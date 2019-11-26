@@ -24,6 +24,7 @@
 22. [HTTP](#http)
 ## [Hook](#hook-notes)
 1. [Introduction](#introduction)
+2. [useState](#useState)
 
 # Notes
 ## React Notes
@@ -1911,11 +1912,29 @@ For More infomation, check [Official Docs](https://reactjs.org/docs/hooks-intro.
 
 [Back to Table of Contents](#table-of-contents)
 
+### useState
+`Hook` function accepts an argument which is the initial value of the `state` property, and returns the current value of the `state` property and a method that is capable of updating that `state` property.
 
+**Rules of Hooks**
 
+1. Only Call Hooks at the Top Level
+    Don’t call Hooks inside loops, conditions, or nested functions. Because React relies on the order in which Hooks are called to know which state corresponds to which hook.
+2. Only Call Hooks from React Functions
+    Don’t call Hooks from regular JavaScript functions.
 
+Here is an example of `useState Hook`
 
+```javascript
+function ButtonClicker() {
+    const [count, setCount] = useState(0);
 
+    return (
+        <button onClick={() => setCount(count + 1)}>Count {count}</button>
+    )
+}
+```
+
+[Back to Table of Contents](#table-of-contents)
 
 
 
