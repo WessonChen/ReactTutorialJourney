@@ -1924,7 +1924,7 @@ For More infomation, check [Official Docs](https://reactjs.org/docs/hooks-intro.
 
     Don’t call Hooks from regular JavaScript functions.
 
-Here is an example of `useState Hook`
+Here is an simple example of `useState Hook`
 
 ```javascript
 function ButtonClicker() {
@@ -1947,14 +1947,40 @@ function ButtonClicker() {
         <>
             <p>Count {count}</p>
             <button onClick={() => setCount(initialCount)}>Reset</button>
+            //Wrong way
             <button onClick={() => setCount(count + 1)}>Increment</button>
+            //Use this
             <button onClick={() => setCount(prevCount => prevCount + 1)}>Increment</button>
         </>
     )
 }
 ```
 
+Sometimes we need to use `object` as a `state`. In this case, when we set state, we have to replace the previous state object. We cannot update one attribute only just like we did in class components. Here is an example.
 
+```javascript
+function ObjectAsState() {
+    const [name, setName] = useState({ firstName: '', lastName: '' });
+
+    return (
+        <form>
+            <input
+                type='text'
+                value={name.firstName}
+                onChange={e => setName({ ...name, firstName: e.target.value })}
+            />
+            <input
+                type='text'
+                value={name.lastName}
+                onChange={e => setName({ ...name, lastName: e.target.value })}
+            />
+            <p>{JSON.stringify(name)}</p>
+        </form>
+    )
+}
+```
+
+`...` is `Spread Operator` introduced in ES6. In here, it represents the rest of the object. It is really helpful when we need to reuse most parts of an object.
 
 [Back to Table of Contents](#table-of-contents)
 
