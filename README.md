@@ -1982,6 +1982,32 @@ function ObjectAsState() {
 
 `...` is `Spread Operator` introduced in ES6. In here, it represents the rest of the object. It is really helpful when we need to reuse most parts of an object.
 
+Similar to use `object` as a `state`, this is an example of using `array` as a `state`.
+
+```javascript
+function ArrayAsState() {
+    const [items, setItems] = useState([])
+
+    const addItem = () => {
+        setItems([...items, {
+            id: items.length,
+            value: Math.floor(Math.random() * 10) + 1
+        }])
+    }
+
+    return (
+        <>
+            <button onClick={addItem}>Add a number</button>
+            <ul>
+                {items.map(item => (
+                    <li key={item.id}>{item.value}</li>
+                ))}
+            </ul>
+        </>
+    )
+}
+```
+
 [Back to Table of Contents](#table-of-contents)
 
 
