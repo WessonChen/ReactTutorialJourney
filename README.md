@@ -2118,10 +2118,22 @@ function MouseContainer() {
 In this case, we added a toggle to unmount the `<MouseHook />`, the results shows below
 
 <p align='center'>
-    <img src='https://i.ibb.co/YXHyxrB/unmount-memory-leak.png'>
+    <img src='https://i.ibb.co/YXHyxrB/unmount-memory-leak.png' height='200'>
 </p>
 
+In this case, we need to know that the function passed to `useEffect` can return a function which will be excuted when the `componentWillUnmount`.
 
+```javascript
+useEffect(() => {
+    window.addEventListener('mousemove', logMousePosition);
+    console.log('useEffect called');
+
+    return () => {
+    window.removeEventListener('mousemove', logMousePosition);
+    console.log('Listener removed');
+    }
+}, []);
+```
 
 [Back to Table of Contents](#table-of-contents)
 

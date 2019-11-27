@@ -32,6 +32,11 @@ function MouseHook() {
     useEffect(() => {
         window.addEventListener('mousemove', logMousePosition);
         console.log('useEffect called');
+
+        return () => {
+        window.removeEventListener('mousemove', logMousePosition);
+        console.log('Listener removed');
+        }
     }, []);
 
     return (
