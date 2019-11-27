@@ -2077,6 +2077,52 @@ function TitleChanger() {
 
 In the example above, we pass `[count]` as the second argument. If the count is 5, and then our component re-renders with count still equal to 5, React will compare `[5]` from the previous render and `[5]` from the next render. Because all items in the array are the same (5 === 5), React would skip the effect.
 
+The effect will only activate if the value in the list change. Which means, if we pass an empty array, the effect will only activate once.
+
+```javascript
+function MouseHook() {
+    const [x, setX] = useState(0);
+    const [y, setY] = useState(0);
+
+    const logMousePosition = e => {
+        setX(e.clientX);
+        setY(e.clientY);
+    };
+
+    useEffect(() => {
+        window.addEventListener('mousemove', logMousePosition);
+        console.log('useEffect called');
+    }, []);
+
+    return (
+        <p>Mouse X: {x}, Y: {y}</p>
+    );
+}
+```
+
+Also, when we add a listener in above code, we should remove it when the component unmount. Otherwise we introduce a memory leak.
+
+```javascript
+function MouseContainer() {
+    const [display, setDisplay] = useState(true);
+
+    return (
+        <>
+            <button onClick={() => setDisplay(!display)}>Toggle display</button>
+            {display && <MouseHook />}
+        </>
+    )
+}
+```
+
+In this case, we added a toggle to unmount the `<MouseHook />`, the results shows below
+
+<p align='center'>
+    <img src='https://i.ibb.co/YXHyxrB/unmount-memory-leak.png'>
+</p>
+
+
+
 [Back to Table of Contents](#table-of-contents)
 
 

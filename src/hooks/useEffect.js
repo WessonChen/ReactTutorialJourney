@@ -19,4 +19,35 @@ function TitleChanger() {
     )
 }
 
-export { TitleChanger }
+function MouseHook() {
+    const [x, setX] = useState(0);
+    const [y, setY] = useState(0);
+
+    const logMousePosition = e => {
+        console.log('Mouse Event');
+        setX(e.clientX);
+        setY(e.clientY);
+    };
+
+    useEffect(() => {
+        window.addEventListener('mousemove', logMousePosition);
+        console.log('useEffect called');
+    }, []);
+
+    return (
+        <p>Mouse X: {x}, Y: {y}</p>
+    );
+}
+
+function MouseContainer() {
+    const [display, setDisplay] = useState(true);
+
+    return (
+        <>
+            <button onClick={() => setDisplay(!display)}>Toggle display</button>
+            {display && <MouseHook />}
+        </>
+    )
+}
+
+export { TitleChanger, MouseHook, MouseContainer }
