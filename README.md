@@ -2129,8 +2129,8 @@ useEffect(() => {
     console.log('useEffect called');
 
     return () => {
-    window.removeEventListener('mousemove', logMousePosition);
-    console.log('Listener removed');
+        window.removeEventListener('mousemove', logMousePosition);
+        console.log('Listener removed');
     }
 }, []);
 ```
