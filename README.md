@@ -2353,9 +2353,44 @@ function CounterUseReducerTwo() {
 }
 ```
 
+Also, we can use multiple reducer to achieve the same above.
 
+```javascript
+const initialStateThree = 0;
+const reducerThree = (state, action) => {
+    switch (action) {
+        case 'increment':
+            return state + 1;
+        case 'decrement':
+            return state - 1;
+        case 'reset':
+            return initialState;
+        default:
+            return state;
+    }
+}
 
+function CounterUseReducerThree() {
+    const [count, dispatch] = useReducer(reducerThree, initialStateThree);
+    const [countTwo, dispatchTwo] = useReducer(reducerThree, initialStateThree);
 
+    return (
+        <>
+            <p>Count: {count}</p>
+            <button onClick={() => dispatch('increment')}>Increment</button>
+            <button onClick={() => dispatch('decrement')}>Decrement</button>
+            <button onClick={() => dispatch('reset')}>Reset</button>
+            <br />
+            <p>Count: {countTwo}</p>
+            <button onClick={() => dispatchTwo('increment')}>Increment</button>
+            <button onClick={() => dispatchTwo('decrement')}>Decrement</button>
+            <button onClick={() => dispatchTwo('reset')}>Reset</button>
+        </>
+    );
+}
+```
+
+So, when dealing with multiple state variables that have the same state transitions, it is a good ideal to use multiple reducers making use of the same reducer function. This will avoid the complexity of merging the state if it was to be an object and also prevents us from duplicating code from reducer function.
 
 [Back to Table of Contents](#table-of-contents)
 

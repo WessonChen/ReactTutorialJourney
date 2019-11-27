@@ -78,4 +78,39 @@ function CounterUseReducerTwo() {
     );
 }
 
-export { CounterUseReducer, CounterUseReducerTwo };
+// -----------------------------------------------------------
+
+const initialStateThree = 0;
+const reducerThree = (state, action) => {
+    switch (action) {
+        case 'increment':
+            return state + 1;
+        case 'decrement':
+            return state - 1;
+        case 'reset':
+            return initialState;
+        default:
+            return state;
+    }
+}
+
+function CounterUseReducerThree() {
+    const [count, dispatch] = useReducer(reducerThree, initialStateThree);
+    const [countTwo, dispatchTwo] = useReducer(reducerThree, initialStateThree);
+
+    return (
+        <>
+            <p>Count: {count}</p>
+            <button onClick={() => dispatch('increment')}>Increment</button>
+            <button onClick={() => dispatch('decrement')}>Decrement</button>
+            <button onClick={() => dispatch('reset')}>Reset</button>
+            <br />
+            <p>Count: {countTwo}</p>
+            <button onClick={() => dispatchTwo('increment')}>Increment</button>
+            <button onClick={() => dispatchTwo('decrement')}>Decrement</button>
+            <button onClick={() => dispatchTwo('reset')}>Reset</button>
+        </>
+    );
+}
+
+export { CounterUseReducer, CounterUseReducerTwo, CounterUseReducerThree };
