@@ -27,7 +27,8 @@
 2. [useState](#usestate)
 3. [useEffect](#useeffect)
 4. [Data Fetching](#data-fetching)
-5. [useContext](#useContext)
+5. [useContext](#usecontext)
+6. [useReducer](#usereducer)
 
 # Notes
 ## React Notes
@@ -2231,15 +2232,82 @@ export default TheParent
 
 [Back to Table of Contents](#table-of-contents)
 
+### useReducer
 
+- `useReducer` is a hook that is used for state management
+- It is an alternative to `useState`
+- `useState` is built using `useReducer`
 
+**[Array.prototype.reduce()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce)**
 
+The `reduce()` method executes a `reducer` function (that you provide) on each element of the array, resulting in a single output value.
 
+```javascript
+const array1 = [1, 2, 3, 4];
+const reducer = (accumulator, currentValue) => accumulator + currentValue;
 
+// 1 + 2 + 3 + 4
+console.log(array1.reduce(reducer));
+// expected output: 10
 
+// 5 + 1 + 2 + 3 + 4
+console.log(array1.reduce(reducer, 5));
+// expected output: 15
+```
 
+It takes two parameters, the first parameter is a `reducer` function. And the second parameter is an initial value the `reducer` can make use of. The `reducer` function itself acceptes two parameters, reduces them down to a single value and then returns that value.
 
+`reduce` | `useReducer`
+:---: | :---:
+`array.reduce(reducer, initialValue)` | `useReducer(reducer, initialState)`
+`singleValue = reducer(accumulator, itemValue)` | `newState = reducer(currentState, action)`
+`reduce` method returns a single value | `useReducer` returns a pair of values. `[newState, dispatch]`
 
+Here is a simple example of `useReducer`
+
+```javascript
+import React, { useReducer } from 'react';
+
+const initialState = 0;
+const reducer = (state, action) => {
+    switch (action) {
+        case 'increment':
+            return state + 1;
+        case 'decrement':
+            return state - 1;
+        case 'reset':
+            return initialState;
+        default:
+            return state;
+    }
+}
+
+function CounterUseReducer() {
+    const [count, dispatch] = useReducer(reducer, initialState);
+
+    const addThree = () => {
+        dispatch('increment');
+        dispatch('increment');
+        dispatch('increment');
+    }
+
+    return (
+        <>
+            <p>Count: {count}</p>
+            <button onClick={() => dispatch('increment')}>Increment</button>
+            <button onClick={() => dispatch('decrement')}>Decrement</button>
+            <button onClick={addThree}>Add Three</button>
+            <button onClick={() => dispatch('reset')}>Reset</button>
+        </>
+    );
+}
+
+export { CounterUseReducer }
+```
+
+Notice that the `dispatch()` will not be grouped, because the `reducer` updates state based on the previous state.
+
+[Back to Table of Contents](#table-of-contents)
 
 
 

@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-import TheParent from './hooks/UseContext';
+import { CounterUseReducer } from './hooks/UseReducer';
 
 class App extends Component {
     render() {
         return (
             <div className='app'>
-                <TheParent />
+                <CounterUseReducer />
             </div>
         );
     }
