@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-import { CounterUseReducer } from './hooks/UseReducer';
+import { CounterUseReducerTwo } from './hooks/UseReducer';
 
 class App extends Component {
     render() {
         return (
             <div className='app'>
-                <CounterUseReducer />
+                <CounterUseReducerTwo />
             </div>
         );
     }
