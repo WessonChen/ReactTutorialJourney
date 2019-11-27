@@ -2392,6 +2392,48 @@ function CounterUseReducerThree() {
 
 So, when dealing with multiple state variables that have the same state transitions, it is a good ideal to use multiple reducers making use of the same reducer function. This will avoid the complexity of merging the state if it was to be an object and also prevents us from duplicating code from reducer function.
 
+Currently, we are using `useReducer` locally on that function. What if we want to manage global states? We can use `useReducer` and `useContext` together. Here is an example.
+
+```javascript
+const initialStateParent = 0;
+const reducerParent = (state, action) => {
+    switch (action) {
+        case 'increment':
+            return state + 1;
+        case 'decrement':
+            return state - 1;
+        case 'reset':
+            return initialState;
+        default:
+            return state;
+    }
+};
+const CountContext = React.createContext();
+
+function CounterParent() {
+    const [count, dispatch] = useReducer(reducerParent, initialStateParent);
+    return (
+        <CountContext.Provider value={{ countState: count, countDispatch: dispatch }}>
+            <p>Count: {count}</p>
+            <CounterChild />
+        </CountContext.Provider>
+    );
+}
+
+function CounterChild() {
+    const countContext = useContext(CountContext);
+    return (
+        <>
+            <button onClick={() => countContext.countDispatch('increment')}>Increment</button>
+            <button onClick={() => countContext.countDispatch('decrement')}>Decrement</button>
+            <button onClick={() => countContext.countDispatch('reset')}>Reset</button>
+        </>
+    );
+}
+```
+
+Now, the `count` state is shared with `CounterParent` and all its child components.
+
 [Back to Table of Contents](#table-of-contents)
 
 

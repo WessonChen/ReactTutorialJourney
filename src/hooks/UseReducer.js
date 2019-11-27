@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useContext } from 'react';
 
 const initialState = 0;
 const reducer = (state, action) => {
@@ -12,7 +12,7 @@ const reducer = (state, action) => {
         default:
             return state;
     }
-}
+};
 
 function CounterUseReducer() {
     const [count, dispatch] = useReducer(reducer, initialState);
@@ -36,7 +36,7 @@ function CounterUseReducer() {
 
 // -----------------------------------------------------------
 
-const initialStateTwo = { 
+const initialStateTwo = {
     firstCounter: 0,
     secondCounter: 10
 };
@@ -51,9 +51,9 @@ const reducerTwo = (state, action) => {
         case 'decrement2':
             return { ...state, secondCounter: state.secondCounter - action.value };
         case 'reset1':
-            return { ...state, firstCounter: initialStateTwo.firstCounter};
+            return { ...state, firstCounter: initialStateTwo.firstCounter };
         case 'reset2':
-            return { ...state, secondCounter: initialStateTwo.secondCounter};
+            return { ...state, secondCounter: initialStateTwo.secondCounter };
         default:
             return state;
     }
@@ -92,7 +92,7 @@ const reducerThree = (state, action) => {
         default:
             return state;
     }
-}
+};
 
 function CounterUseReducerThree() {
     const [count, dispatch] = useReducer(reducerThree, initialStateThree);
@@ -113,4 +113,42 @@ function CounterUseReducerThree() {
     );
 }
 
-export { CounterUseReducer, CounterUseReducerTwo, CounterUseReducerThree };
+// -----------------------------------------------------------
+
+const initialStateParent = 0;
+const reducerParent = (state, action) => {
+    switch (action) {
+        case 'increment':
+            return state + 1;
+        case 'decrement':
+            return state - 1;
+        case 'reset':
+            return initialState;
+        default:
+            return state;
+    }
+};
+const CountContext = React.createContext();
+
+function CounterParent() {
+    const [count, dispatch] = useReducer(reducerParent, initialStateParent);
+    return (
+        <CountContext.Provider value={{ countState: count, countDispatch: dispatch }}>
+            <p>Count: {count}</p>
+            <CounterChild />
+        </CountContext.Provider>
+    );
+}
+
+function CounterChild() {
+    const countContext = useContext(CountContext);
+    return (
+        <>
+            <button onClick={() => countContext.countDispatch('increment')}>Increment</button>
+            <button onClick={() => countContext.countDispatch('decrement')}>Decrement</button>
+            <button onClick={() => countContext.countDispatch('reset')}>Reset</button>
+        </>
+    );
+}
+
+export { CounterUseReducer, CounterUseReducerTwo, CounterUseReducerThree, CounterParent };
