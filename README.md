@@ -27,6 +27,7 @@
 2. [useState](#usestate)
 3. [useEffect](#useeffect)
 4. [Data Fetching](#data-fetching)
+5. [useContext](#useContext)
 
 # Notes
 ## React Notes
@@ -2177,17 +2178,58 @@ export { DataFetching }
 
 [Back to Table of Contents](#table-of-contents)
 
+### useContext
 
+`useContext` accepts a context object (the value returned from `React.createContext`) and returns the current context value for that context. The current context value is determined by the value prop of the **nearest** `<MyContext.Provider>` above the calling component in the tree.
 
+When the nearest `<MyContext.Provider>` above the component updates, this Hook will trigger a rerender with the latest context value passed to that MyContext provider.
 
+A component calling `useContext` will always re-render when the context value changes. If re-rendering the component is expensive, you can [optimize it by using memoization](https://github.com/facebook/react/issues/15156#issuecomment-474590693).
 
+`useContext(MyContext)` only lets you read the context and subscribe to its changes. You still need a `<MyContext.Provider>` above in the tree to provide the value for this context.
 
+```javascript
+import React, { useContext } from 'react';
 
+const themes = {
+    light: {
+        foreground: "#000000",
+        background: "#eeeeee"
+    },
+    dark: {
+        foreground: "#ffffff",
+        background: "#222222"
+    }
+};
 
+const ThemeContext = React.createContext(themes.light);
+const UserContext = React.createContext();
 
+function TheParent() {
+    return (
+        <ThemeContext.Provider value={themes.dark}>
+            <UserContext.Provider value='Guest'>
+                <TheChild />
+            </UserContext.Provider>
+        </ThemeContext.Provider>
+    )
+}
 
+function TheChild() {
+    const theme = useContext(ThemeContext);
+    const user = useContext(UserContext);
 
+    return (
+        <p style={{ background: theme.background, color: theme.foreground }}>
+            {user}
+        </p>
+    )
+}
 
+export default TheParent
+```
+
+[Back to Table of Contents](#table-of-contents)
 
 
 
