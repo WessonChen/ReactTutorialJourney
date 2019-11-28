@@ -2556,7 +2556,7 @@ export default ParentComponent;
 When we click any button, all components inside the parent component will be re-rendered.
 
 <p align='center'>
-    <img src='https://i.ibb.co/10CLdL2/child-rerendered.png' height='200'>
+    <img src='https://i.ibb.co/10CLdL2/child-rerendered.png' hight='200'>
 </p>
 
 It is not ideal because it may cause performance issues.
@@ -2581,7 +2581,7 @@ const Button = React.memo(function Button({ handleClick, children }) {
 However, when we click a button, we can still see that both button re-renders.
 
 <p align='center'>
-    <img src='https://i.ibb.co/8d4fCHy/buttons-rerendered.png' height='150'>
+    <img src='https://i.ibb.co/8d4fCHy/buttons-rerendered.png' hight='150'>
 </p>
 
 This is a new `incrementSalary` function re-created each time the parent component re-renders. And when dealing with functions, we always have to consider references equality. Even though two function has the exact same behaviour, it dose not mean they are equal to each other. So the function before the re-render is different from the function after the re-render. And since the function is a prop, `React.memo` sees that the prop has changed and will not prevent the re-render.
@@ -2605,7 +2605,7 @@ const incrementAge = useCallback(
 ```
 
 <p align='center'>
-    <img src='https://i.ibb.co/wsWX2KW/usecallback-hook.png' height='120'>
+    <img src='https://i.ibb.co/wsWX2KW/usecallback-hook.png' hight='120'>
 </p>
 
 [Back to Table of Contents](#table-of-contents)
