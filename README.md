@@ -31,6 +31,8 @@
 6. [useReducer](#usereducer)
 7. [useCallback](#usecallback)
 8. [useMemo](#usememo)
+9. [useRef](#useRef)
+10. [Custom Hook](#custom-hook)
 
 # Notes
 ## React Notes
@@ -2672,3 +2674,125 @@ The `useCallback` caches the provided function instance itself, it never creates
 So, if you need to cache a function - `useCallback`, if you need to cache the result of invoked function - `useMemo`.
 
 [Back to Table of Contents](#table-of-contents)
+
+### useRef
+As we learnt from [Refs](#refs) in class component, we can use ref to focus input. This is how we use `useRef` hook in function components to achieve the same.
+
+```javascript
+function FocusUseRef() {
+    const inputRef = useRef(null);
+
+    useEffect(() => {
+        inputRef.current.focus();
+    }, []);
+
+    return <input ref={inputRef} type='text' />;
+}
+```
+
+`useRef` can not only hold a ref to the DOM node, but also store any mutable value. And what is great is the value will processe through the re-renders while also not causing any additional renders when its value changes. This is an example of setting a timer and a button to clear it.
+
+```javascript
+function TimerUseRef() {
+    const [time, setTime] = useState(0);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setTime(prev => prev + 1);
+        }, 1000);
+        return () => {
+            clearInterval(interval);
+        };
+    }, []);
+
+    return (
+        <>
+            <p>Timer: {time}</p>
+            <button onClick={() => clearInterval(interval)}>Clear Timer</button>
+        </>
+    );
+}
+```
+
+<p align='center'>
+    <img src='https://i.ibb.co/tK4ZMGT/error-without-ref-hook.png'>
+</p>
+
+As we can see, there is an error of `interval` not defined. This is because we set the timer inside the `useEffect` 
+
+```javascript
+function TimerUseRef() {
+    const [time, setTime] = useState(0);
+    const intervalRef = useRef();
+
+    useEffect(() => {
+        intervalRef.current = setInterval(() => {
+            setTime(prev => prev + 1);
+        }, 1000);
+        return () => {
+            clearInterval(intervalRef.current);
+        };
+    }, []);
+
+    return (
+        <>
+            <p>Timer: {time}</p>
+            <button onClick={() => clearInterval(intervalRef.current)}>Clear Timer</button>
+        </>
+    );
+}
+```
+
+[Back to Table of Contents](#table-of-contents)
+
+### Custom Hook
+
+
+
+
+
+
+
+
+[Back to Table of Contents](#table-of-contents)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
