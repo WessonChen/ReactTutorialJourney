@@ -2142,7 +2142,7 @@ useEffect(() => {
 
 ### Data Fetching
 
-Similar to how to send HTTP request in class component, we can do that in hook as well
+Similar to how to send HTTP request in class component, we can do that by using `useState` and `useEffect` as well.
 
 ```javascript
 import React, { useState, useEffect } from 'react';
@@ -2175,6 +2175,54 @@ function DataFetching() {
 }
 
 export { DataFetching }
+```
+
+Also, we can use `useReducer` instead of `useState` to fetch data. Learn more about `useReducer`, please check [HERE](#usereducer).
+
+```javascript
+const initialState = {
+    loading: true,
+    error: '',
+    post: {}
+};
+const reducer = (state, action) => {
+    switch (action.type) {
+        case 'SUCCESS':
+            return {
+                loading: false,
+                error: '',
+                post: action.payload
+            }
+        case 'ERROR':
+            return {
+                loading: false,
+                error: 'Something went wrong!',
+                post: {}
+            }
+        default:
+            return state;
+    }
+};
+
+function DataFetchingTwo() {
+    const [state, dispatch] = useReducer(reducer, initialState);
+
+    useEffect(() => {
+        Axios.get('https://jsonplaceholder.typicode.com/posts/1')
+            .then(res => {
+                dispatch({ type: 'SUCCESS', payload: res.data })
+            })
+            .catch(() => {
+                dispatch({ type: 'ERROR' })
+            });
+    });
+    return (
+        <>
+            {state.loading ? 'Loading......' : state.post.title}
+            {state.error ? state.error : null}
+        </>
+    )
+}
 ```
 
 [Back to Table of Contents](#table-of-contents)

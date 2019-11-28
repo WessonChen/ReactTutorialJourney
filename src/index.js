@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-import { CounterParent } from './hooks/UseReducer';
+import { DataFetchingTwo } from './hooks/DataFetching';
 
 class App extends Component {
     render() {
         return (
             <div className='app'>
-                <CounterParent />
+                <DataFetchingTwo />
             </div>
         );
     }
