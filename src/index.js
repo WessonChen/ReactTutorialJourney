@@ -1,12 +1,14 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-import { TimerUseRef } from './hooks/useRef';
+import { DocTitleChanger, CounterUseCounterHook, FormUseInputHook } from './hooks/CustomHook';
 
 class App extends Component {
     render() {
         return (
             <div className='app'>
-                <TimerUseRef />
+                <DocTitleChanger />
+                <CounterUseCounterHook />
+                <FormUseInputHook />
             </div>
         );
     }
