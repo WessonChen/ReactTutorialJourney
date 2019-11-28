@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-import ParentComponent from './hooks/UseCallback';
+import CounterUseMemo from './hooks/UseMemo';
 
 class App extends Component {
     render() {
         return (
             <div className='app'>
-                <ParentComponent />
+                <CounterUseMemo />
             </div>
         );
     }

@@ -30,6 +30,7 @@
 5. [useContext](#usecontext)
 6. [useReducer](#usereducer)
 7. [useCallback](#usecallback)
+8. [useMemo](#usememo)
 
 # Notes
 ## React Notes
@@ -2556,7 +2557,7 @@ export default ParentComponent;
 When we click any button, all components inside the parent component will be re-rendered.
 
 <p align='center'>
-    <img src='https://i.ibb.co/10CLdL2/child-rerendered.png' hight='200'>
+    <img src='https://i.ibb.co/10CLdL2/child-rerendered.png'>
 </p>
 
 It is not ideal because it may cause performance issues.
@@ -2581,7 +2582,7 @@ const Button = React.memo(function Button({ handleClick, children }) {
 However, when we click a button, we can still see that both button re-renders.
 
 <p align='center'>
-    <img src='https://i.ibb.co/8d4fCHy/buttons-rerendered.png' hight='150'>
+    <img src='https://i.ibb.co/8d4fCHy/buttons-rerendered.png'>
 </p>
 
 This is a new `incrementSalary` function re-created each time the parent component re-renders. And when dealing with functions, we always have to consider references equality. Even though two function has the exact same behaviour, it dose not mean they are equal to each other. So the function before the re-render is different from the function after the re-render. And since the function is a prop, `React.memo` sees that the prop has changed and will not prevent the re-render.
@@ -2605,18 +2606,69 @@ const incrementAge = useCallback(
 ```
 
 <p align='center'>
-    <img src='https://i.ibb.co/wsWX2KW/usecallback-hook.png' hight='120'>
+    <img src='https://i.ibb.co/wsWX2KW/usecallback-hook.png'>
 </p>
 
 [Back to Table of Contents](#table-of-contents)
 
+### useMemo
+Let us understand it by an example.
 
+```javascript
+import React, { useState } from 'react';
 
+function CounterUseMemo() {
+    const [counterOne, setCounterOne] = useState(0);
+    const [counterTwo, setCounterTwo] = useState(0);
 
+    const incrementOne = () => {
+        setCounterOne(counterOne + 1);
+    };
+    const incrementTwo = () => {
+        setCounterTwo(counterTwo + 1);
+    }
 
+    const isEven = () => {
+        let i = 0;
+        while (i < 2000000000) i++;
+        return counterOne % 2 === 0;
+    };
 
+    return (
+        <>
+            <button onClick={incrementOne}>Count One: {counterOne}</button>
+            <span>{isEven() ? ' Even' : ' Odd'}</span>
+            <br />
+            <button onClick={incrementTwo}>Count Two: {counterTwo}</button>
+        </>
+    )
+}
 
+export default CounterUseMemo;
+```
 
+In really world, we may have complex logic in a function. To keep it simple, we run a loop in `isEven()` to simulate it.
 
+When we click the first button, we can feel the delay of the result. Because we are calling `isEven()` which takes time. However, when we click the second button, the delay is still there.
 
+This is because everytime the `state` updates, the component re-renders. And when the component re-renders, `isEven()` is called again. 
 
+So, how to not calculate counterone when changing countertwo. This is where the `useMemo` come to the picture.
+
+`useMemo` is a hook that will only re-compute the cached value when one of the dependencies has changed. This optimization helps to avoid expensive calculations on every render.
+
+```javascript
+const isEven = useMemo(() => {
+    let i = 0;
+    while (i < 2000000000) i++;
+    return counterOne % 2 === 0;
+}, [counterOne]);
+```
+
+**`useCallback` vs `useMemo`**
+
+The `useCallback` caches the provided function instance itself, it never creates a new callback. While `useMemo` invokes the proveded function and caches its relust.
+
+So, if you need to cache a function - `useCallback`, if you need to cache the result of invoked function - `useMemo`.
+
+[Back to Table of Contents](#table-of-contents)
