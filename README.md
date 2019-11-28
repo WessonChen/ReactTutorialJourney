@@ -29,6 +29,7 @@
 4. [Data Fetching](#data-fetching)
 5. [useContext](#usecontext)
 6. [useReducer](#usereducer)
+7. [useCallback](#usecallback)
 
 # Notes
 ## React Notes
@@ -2494,13 +2495,120 @@ Now, the `count` state is shared with `CounterParent` and all its child componen
 
 [Back to Table of Contents](#table-of-contents)
 
+### useCallback
+Let us understand this by a example first.
 
+```javascript
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
+function ParentComponent() {
+    const [age, setAge] = useState(25);
+    const [salary, setSalary] = useState(50000);
 
+    const incrementAge = () => {
+        setAge(age + 1);
+    };
+    const incrementSalary = () => {
+        setSalary(salary + 1000);
+    };
 
+    return (
+        <>
+            <Title>useCallback Hook</Title>
+            <Count text='Age' count={age} />
+            <Button handleClick={incrementAge}>Increment Age</Button>
+            <Count text='Salary' count={salary} />
+            <Button handleClick={incrementSalary}>Increment Salary</Button>
+        </>
+    )
+}
 
+function Title({ children }) {
+    console.log('Rendering Title');
+    return <h2>{children}</h2>
+}
+Title.propTypes = {
+    children: PropTypes.node
+}
 
+function Count({ text, count }) {
+    console.log(`Rendering ${text}`);
+    return <p>{text}: {count}</p>
+}
+Count.propTypes = {
+    text: PropTypes.string,
+    count: PropTypes.number
+}
 
+function Button({ handleClick, children }) {
+    console.log(`Rendering button: `, children);
+    return <button onClick={handleClick}>{children}</button>
+}
+Button.propTypes = {
+    handleClick: PropTypes.func,
+    children: PropTypes.node
+}
+
+export default ParentComponent;
+```
+
+When we click any button, all components inside the parent component will be re-rendered.
+
+<p align='center'>
+    <img src='https://i.ibb.co/10CLdL2/child-rerendered.png' height='200'>
+</p>
+
+It is not ideal because it may cause performance issues.
+
+Fist, we can use [Memo](#memo) for child components
+
+```javascript
+const Title = React.memo(function Title({ children }) {
+    console.log('Rendering Title');
+    return <h2>{children}</h2>
+});
+const Count = React.memo(function Count({ text, count }) {
+    console.log(`Rendering ${text}`);
+    return <p>{text}: {count}</p>
+});
+const Button = React.memo(function Button({ handleClick, children }) {
+    console.log(`Rendering button: `, children);
+    return <button onClick={handleClick}>{children}</button>
+});
+```
+
+However, when we click a button, we can still see that both button re-renders.
+
+<p align='center'>
+    <img src='https://i.ibb.co/8d4fCHy/buttons-rerendered.png' height='150'>
+</p>
+
+This is a new `incrementSalary` function re-created each time the parent component re-renders. And when dealing with functions, we always have to consider references equality. Even though two function has the exact same behaviour, it dose not mean they are equal to each other. So the function before the re-render is different from the function after the re-render. And since the function is a prop, `React.memo` sees that the prop has changed and will not prevent the re-render.
+
+So, how can we tell React to not recreate the function when re-rendering the parent component. The anwser is `useCallback`.
+
+- `useCallback` is a hook that will return a memoized version of the callback function that only changes if one of the dependencies has changed.
+
+- It is useful when passing callbacks to optimized child components that rely on reference equality to revent unnecessary renders.
+
+The `useCallback` accepts a callback function as its first parameter and an array of dependencies as its second parameter.
+
+```javascript
+const incrementAge = () => {
+    setAge(age + 1);
+};
+
+const incrementAge = useCallback(
+    () => {setAge(age + 1);}, [age]
+);
+```
+
+<p align='center'>
+    <img src='https://i.ibb.co/wsWX2KW/usecallback-hook.png' height='120'>
+</p>
+
+[Back to Table of Contents](#table-of-contents)
 
 
 
