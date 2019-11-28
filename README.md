@@ -2482,6 +2482,16 @@ function CounterChild() {
 
 Now, the `count` state is shared with `CounterParent` and all its child components.
 
+**`useState` vs `useReducer`** When should we use them.
+
+**Scenario** | **`useState`** | **`useReducer`**
+:---: | :---: | :---:
+**Type of state** | Number, String, Boolean | Objects or Array
+**Number of state transitions** | One or two | Too many
+**Related state transitions?** | No | Yes
+**Business logic** | No business logic | Complex business logic
+**Local vs global** | Local | Global
+
 [Back to Table of Contents](#table-of-contents)
 
 
